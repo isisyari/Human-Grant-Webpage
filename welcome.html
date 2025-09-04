@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome | LakeForest.AI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+    @font-face {
+  font-family: 'Room 205';
+  src: url('font/Room205-Regular.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+    
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Room 205', serif;
+      background-color: #ffffff;
+      background-image: url(lfc.png);
+      color: #080807;
+      height: 100%;
+      overflow: hidden;
+    }
+    
+    .container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .center-content {
+      text-align: center;
+      z-index: 2;
+      position: relative;
+      transition: all 0.5s ease;
+      height: 250px;
+      width:100%;
+      background-color: #ffffff;
+      border-radius:0%;
+    }
+    
+    .center-content.fade-out {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    
+    .title {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .title span {
+      color: #b61f2a;
+    }
+    
+    .tagline {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.8;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 15px 40px;
+      background: #f28c28;
+      color: #000000;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 1.1rem;
+    }
+    
+    .btn:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(199, 116, 38, 0.3);
+    }
+    
+    #pixel-transition {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0;
+      display: grid;
+      grid-template-columns: repeat(50, 1fr);
+      grid-template-rows: repeat(30, 1fr);
+      gap: 1px;
+    }
+    
+    .pixel {
+      background: #b61f2a;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .pixel.animate {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    .pixel.fade-out {
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.6s ease-out;
+    }
+    
+
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 1;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 0;
+        transform: translateY(0);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .title {
+        font-size: 2rem;
+      }
+      
+      .tagline {
+        font-size: 1rem;
+      }
+      
+      #pixel-transition {
+        grid-template-columns: repeat(30, 1fr);
+        grid-template-rows: repeat(20, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Welcome Screen -->
+  <div class="container" id="welcomeScreen">
+    <div class="center-content" id="centerContent">
+      <h1 class="title">Welcome to <span>LakeForest.AI</span></h1>
+      <p class="tagline">Exploring the intersection of AI, the humanities, and ethics.</p>
+      <button class="btn" id="startBtn">Get Started</button>
+    </div>
+  </div>
+
+  <!-- Pixel Transition Layer -->
+  <div id="pixel-transition"></div>
+
+
+
+  <script>
+    document.getElementById('startBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Fade out the welcome content
+      const centerContent = document.getElementById('centerContent');
+      centerContent.classList.add('fade-out');
+      
+      // Show pixel transition
+      const transition = document.getElementById('pixel-transition');
+      transition.style.opacity = 1;
+      
+      // Calculate grid dimensions
+      const cols = 50;
+      const rows = 30;
+      const totalPixels = cols * rows;
+      
+      // Create pixels
+      for (let i = 0; i < totalPixels; i++) {
+        const pixel = document.createElement('div');
+        pixel.classList.add('pixel');
+        transition.appendChild(pixel);
+      }
+      
+      // Animate pixels in waves (build up)
+      const pixels = document.querySelectorAll('.pixel');
+      
+      // Create a wave effect from center outward
+      pixels.forEach((pixel, index) => {
+        const row = Math.floor(index / cols);
+        const col = index % cols;
+        
+        // Calculate distance from center
+        const centerRow = rows / 2;
+        const centerCol = cols / 2;
+        const distance = Math.sqrt(
+          Math.pow(row - centerRow, 2) + Math.pow(col - centerCol, 2)
+        );
+        
+        // Add some randomness
+        const randomDelay = Math.random() * 150;
+        const delay = (distance * 25) + randomDelay;
+        
+        setTimeout(() => {
+          pixel.classList.add('animate');
+        }, delay);
+      });
+      
+      // After pixels build up, start fading them out
+      setTimeout(() => {
+        pixels.forEach((pixel, index) => {
+          const row = Math.floor(index / cols);
+          const col = index % cols;
+          
+          // Calculate distance from center for fade out
+          const centerRow = rows / 2;
+          const centerCol = cols / 2;
+          const distance = Math.sqrt(
+            Math.pow(row - centerRow, 2) + Math.pow(col - centerCol, 2)
+          );
+          
+          const randomDelay = Math.random() * 100;
+          const delay = (distance * 15) + randomDelay;
+          
+          setTimeout(() => {
+            pixel.classList.add('fade-out');
+          }, delay);
+        });
+      }, 1200);
+      
+      // Redirect after smooth fade out completes
+      setTimeout(() => {
+        // Add a final fade on the entire transition
+        transition.style.transition = 'opacity 0.5s ease-out';
+        transition.style.opacity = '0';
+        
+        setTimeout(() => {
+          window.location.href = 'home.html';
+        }, 500);
+      }, 2200);
+    });
+    
+    // Add some interactive hover effects
+    document.addEventListener('mousemove', (e) => {
+      const centerContent = document.getElementById('centerContent');
+      if (centerContent && !centerContent.classList.contains('fade-out')) {
+        const rect = centerContent.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const deltaX = (e.clientX - centerX) * 0.01;
+        const deltaY = (e.clientY - centerY) * 0.01;
+        
+        centerContent.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+      }
+    });
+  </script>
+</body>
+</html>
