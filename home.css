@@ -1,350 +1,568 @@
-/* General Reset */
+/* ═══════════════════════════════════════════════════════════════
+   LakeForest.AI — Editorial Style
+   ═══════════════════════════════════════════════════════════════ */
+
 :root {
-  --primary-red: #b61f2a;     /* Lake Forest red */
-  --accent-orange: #f28c28;   /* Gold/Orange */
-  --dark-maroon: #6a1b1a;
-  --dark-gray: #333333;
-  --light-gray: #f5f5f5;
+  --red: #b61f2a;
+  --orange: #f28c28;
+  --maroon: #6a1b1a;
+  --charcoal: #2a2a2a;
+  --slate: #555;
+  --mist: #f7f7f5;
+  --white: #ffffff;
 }
+
 @font-face {
   font-family: 'Room 205';
-  src: url('font/Room205-Regular.otf') format('truetype');
+  src: url('font/Room205-Regular.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
 
-/* General font for the rest of the page */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: 'Sofia Pro', sans-serif;
+  font-family: 'Sofia Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--mist);
+  color: var(--charcoal);
+  line-height: 1.6;
+  font-size: 15px;
 }
 
-/* Apply Room 205 only to the title and footer */
-.site-title, footer {
-  font-family: 'Room 205', serif;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-  
-  .site-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: var(--primary-red); /* red "LakeForest." */
-  }
-  
-  .site-title span {
-    color: var(--accent-orange); /* orange "AI" */
-  }
-  
-  
-  /* Header */
-  header {
-    background-color: var(--light-gray); /* light neutral background */
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 4px solid var(--primary-red);
-  }
+/* ─────────────────────────────────────────────────────────────────
+   Header
+   ───────────────────────────────────────────────────────────────── */
 
-  .header-left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .header-logo {
-    width: 80px;
-    height: auto;
-    margin-bottom: 1rem;
-    margin-right: 1rem;
-  }
-  
-  
-  
-  .top-bar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .top-bar input {
-    padding: 0.5rem;
-    width: 150px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  nav a {
-    margin-left: 1rem;
-    text-decoration: none;
-    color: #333;
-    font-weight: bold;
-  }
-  
-  /* Main Layout */
+header {
+  background: var(--white);
+  border-bottom: 3px solid var(--red);
+  padding: 1.25rem 3rem;
+}
+
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.header-logo {
+  height: 55px;
+  width: auto;
+}
+
+.site-title {
+  font-family: 'Room 205', Georgia, serif;
+  font-size: 2rem;
+  font-weight: normal;
+  color: var(--red);
+  letter-spacing: -0.5px;
+}
+
+.site-title span {
+  color: var(--orange);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Main Content
+   ───────────────────────────────────────────────────────────────── */
+
+main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem;
+}
+
+/* Section Headers */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-header h2,
+.section-header h3 {
+  font-family: 'Room 205', Georgia, serif;
+  font-weight: normal;
+  font-size: 1.5rem;
+  color: var(--charcoal);
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--charcoal);
+  opacity: 0.2;
+}
+
+.section-line.accent {
+  background: var(--orange);
+  opacity: 0.6;
+}
+
+.section-desc {
+  color: var(--slate);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Newsletter Section (Digest + Podcasts)
+   ───────────────────────────────────────────────────────────────── */
+
+.newsletter-section {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 4rem;
+  margin-bottom: 4rem;
+}
+
+.left, .right {
+  min-width: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Digest Image Grid
+   ───────────────────────────────────────────────────────────────── */
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.image-card {
+  position: relative;
+  display: block;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--white);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.image-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+}
+
+.image-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.card-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2.5rem 0.75rem 0.75rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.card-tag {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.card-title {
+  font-size: 0.85rem;
+  color: var(--white);
+  font-weight: 500;
+}
+
+/* View All Card */
+.image-card.view-all {
+  background: var(--white);
+  border: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  gap: 0.5rem;
+}
+
+.image-card.view-all:hover {
+  border-color: var(--red);
+  background: var(--mist);
+}
+
+.view-text {
+  font-size: 0.85rem;
+  color: var(--slate);
+  font-weight: 500;
+}
+
+.view-arrow {
+  font-size: 1.5rem;
+  color: var(--red);
+  transition: transform 0.2s;
+}
+
+.image-card.view-all:hover .view-arrow {
+  transform: translateX(4px);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Podcast Grid
+   ───────────────────────────────────────────────────────────────── */
+
+.podcast-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.podcast-card {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 1;
+  cursor: pointer;
+}
+
+.podcast-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.podcast-card:hover img {
+  transform: scale(1.05);
+}
+
+.podcast-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 50%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  color: var(--white);
+}
+
+.podcast-overlay h4 {
+  font-family: 'Room 205', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: normal;
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+
+.podcast-overlay p {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-bottom: 0.75rem;
+}
+
+.play-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  width: 48px;
+  height: 48px;
+  background: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--charcoal);
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.25s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.play-btn svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 3px;
+}
+
+.podcast-card:hover .play-btn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Reads & Projects Section
+   ───────────────────────────────────────────────────────────────── */
+
+.reads-projects {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Reads Grid */
+.reads-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.read-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 1.25rem;
+  display: flex;
+  gap: 1rem;
+  transition: box-shadow 0.25s;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+.read-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.read-number {
+  font-family: 'Room 205', Georgia, serif;
+  font-size: 2rem;
+  color: var(--red);
+  opacity: 0.25;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.read-content h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.read-content h4 a {
+  color: var(--charcoal);
+  transition: color 0.2s;
+}
+
+.read-content h4 a:hover {
+  color: var(--red);
+}
+
+.read-author {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--orange);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.read-content p {
+  font-size: 0.82rem;
+  color: var(--slate);
+  line-height: 1.5;
+}
+
+/* Projects Stack */
+.projects-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.project-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: box-shadow 0.25s, border-color 0.25s;
+  border: 1px solid rgba(0,0,0,0.04);
+  border-left: 3px solid var(--orange);
+}
+
+.project-card:hover {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  border-left-color: var(--red);
+}
+
+.project-icon {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, var(--red), var(--maroon));
+  color: var(--white);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Room 205', Georgia, serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.project-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-content h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  color: var(--charcoal);
+}
+
+.project-content p {
+  font-size: 0.8rem;
+  color: var(--slate);
+  line-height: 1.45;
+}
+
+.project-arrow {
+  font-size: 1.25rem;
+  color: var(--slate);
+  opacity: 0.3;
+  transition: opacity 0.2s, transform 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.project-card:hover .project-arrow {
+  opacity: 1;
+  color: var(--red);
+  transform: translateX(3px);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Footer
+   ───────────────────────────────────────────────────────────────── */
+
+footer {
+  background: var(--charcoal);
+  color: var(--white);
+  padding: 2rem 3rem;
+  margin-top: 2rem;
+}
+
+.footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.footer-logo {
+  height: 45px;
+  width: auto;
+  opacity: 0.9;
+}
+
+.footer-tagline {
+  font-family: 'Room 205', Georgia, serif;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-nav a {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.footer-nav a:hover {
+  opacity: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Responsive
+   ───────────────────────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
   main {
     padding: 2rem;
   }
 
-  .newsletter-section h2{
-    margin-bottom: 1rem;
+  .newsletter-section {
+    grid-template-columns: 1fr;
+    gap: 3rem;
   }
 
-  .newsletter-section h3{
-    margin-bottom: 1rem;
-  }
-  
-  .newsletter-section {
-    display: flex;
-    justify-content: space-between;
+  .reads-projects {
+    grid-template-columns: 1fr;
     gap: 3rem;
-    align-items: flex-start;
-    margin-bottom: 2rem;
   }
-  
-  .left {
-    flex: 1.6;
+}
+
+@media (max-width: 700px) {
+  header {
+    padding: 1rem 1.5rem;
   }
-  
-  .right {
-    flex: 1.2;
+
+  main {
+    padding: 1.5rem;
   }
-  
+
   .image-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-    margin-top: 0.5rem;
+    grid-template-columns: repeat(2, 1fr);
   }
-  .image-card {
-    display: flex;               /* add */
+
+  .reads-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-inner {
     flex-direction: column;
-    gap: 4px;  
+    gap: 1.5rem;
     text-align: center;
   }
-  /* Remove big default paragraph margins */
-.image-card p,
-.image-grid p {
-  margin: 0;                   /* add */
-  line-height: 1.2;            /* optional: tighter caption */
-  font-size: 0.95rem;          /* optional */
-}
-  
-  .image-grid img {
-    display: block; 
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit:fill;
-    border-radius: 1px;
-  }
-  
-  
-  
-  .event-list {
-    display:flex;
+
+  .footer-brand {
     flex-direction: column;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  
-  .event-card {
-    background-color: #eee;
-    padding: 0.7rem;
-    border-left: 4px solid #4455c2;
-  }
-  
-  /* Reads and Projects Section */
-  .reads-projects {
-    display: flex;
-    gap: 2rem;
-    margin-top: 3rem;
-    margin-bottom: 2rem;
-  }
-  
-  .relevant-reads, .research-projects {
-    flex: 1;
-    margin-bottom:0.5rem
-  }
-  .relevant-reads h3, .research-projects h3{
-    margin-bottom: 0.5rem;
+    gap: 0.75rem;
   }
 
-  
-  .read-entry {
-    margin-top: 1rem;
-    padding-left: 1rem;
-    border-left: 4px solid #b61f2a;
+  .footer-nav {
+    gap: 1.25rem;
   }
-  
-  .project-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  
-  .project-card {
-    margin-top: 1rem;
-    padding-left: 1rem;
-    border-left: 4px solid #f28c28;
-  }
-  
-  /* Footer */
-  
-  footer {
-    background-color: #292626;
-    padding: 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: start;
-    margin-top: 2rem;
+}
+
+@media (max-width: 480px) {
+  .site-title {
+    font-size: 1.5rem;
   }
 
-  .footer-left {
-    display: flex;
-    flex-direction:row;
-    align-items: flex-start;
+  .header-logo {
+    height: 40px;
   }
-  
-  .footer-logo {
-    width: 80px;
-    height: auto;
-    margin-bottom: 1rem;
-  }
-  
- 
-  
-  .footer-right a {
-    display: block;
-    margin-bottom: 0.5rem;
-    text-decoration: none;
-    color: #ffffff;
-  }
-  
-  footer button {
-    margin-top: 0.5rem;
-    padding: 0.5rem 1rem;
-  }
-  .podcasts {
-    margin-block: 3rem;
-  }
-  
-  .podcasts h3 {
-    margin-bottom: 0.75rem;
-  }
-  
+
   .podcast-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: 1fr;
   }
-  
-  @media (min-width: 900px) {
-    .podcast-grid { grid-template-columns: repeat(4, 1fr); }
-  }
-  
-  .podcast-card {
-    background: #0c0f14;
-    border: 1px solid #1f2937;
-    border-radius: 16px;
-    padding: 12px;
-    box-shadow: 0 6px 20px rgb(0 0 0 / 12%);
-  }
-  
-  .embed-16x9 {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;           /* keeps a tidy preview shape */
-    overflow: hidden;
-    border-radius: 12px;
-  }
-  
-  .embed-16x9 iframe {
-    position: absolute; inset: 0;
-    width: 100%; height: 100%;
-    border: 0;
-  }
-  
-  .podcast-title {
-    margin: 10px 4px 0;
-    font-weight: 600;
-  }
-  /* 2×2 grid that fills the aside width */
-.podcast-grid{
-  display:grid;
-  grid-template-columns:repeat(2, minmax(0,1fr));
-  gap:16px;
-}
-
-@media (max-width: 800px){
-  .podcast-grid{ grid-template-columns:1fr; }
-}
-
-/* Card */
-.podcast-card{
-  position:relative;
-  height:260px;                 /* make them big; tweak as you like */
-  border-radius:18px;
-  overflow:hidden;
-  background:#0c0f14;
-  box-shadow:0 10px 25px rgba(0,0,0,.15);
-}
-
-/* Artwork */
-.podcast-card > img{
-  position:absolute; inset:0;
-  width:100%; height:100%;
-  object-fit:cover;
-  filter:saturate(1.1) contrast(1.05);
-}
-
-/* Overlay content */
-.podcast-overlay{
-  position:absolute; inset:0;
-  display:flex; flex-direction:column; justify-content:flex-end;
-  padding:14px;
-  background:linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,.65) 100%);
-  color:#fff;
-}
-
-.podcast-overlay h4{
-  margin:0 0 2px 0; font-size:1rem; line-height:1.2;
-}
-.podcast-overlay p{ margin:0 0 8px 0; opacity:.8; font-size:.9rem; }
-
-/* Controls row */
-.controls{
-  display:flex; align-items:center; justify-content:center;
-  gap:16px; margin-bottom:8px;
-}
-
-.controls .play{
-  display:grid; place-items:center;
-  width:56px; height:56px; border-radius:50%;
-  background:#ffffff; color:#111;
-  font-weight:700; font-size:26px; text-decoration:none;
-  box-shadow:0 6px 16px rgba(0,0,0,.35);
-  transition:transform .12s ease;
-}
-.controls .play:hover{ transform:scale(1.05); }
-
-.controls .skip{
-  width:44px; height:44px; border-radius:50%;
-  border:1px solid rgba(255,255,255,.35);
-  background:transparent; color:#fff; font-weight:700;
-  cursor:default;              /* decorative */
-}
-
-/* Fake scrubber */
-.scrubber{
-  display:grid; grid-template-columns:auto 1fr auto;
-  align-items:center; gap:8px;
-}
-.scrubber .time{ font-size:.8rem; opacity:.85; }
-.scrubber .bar{
-  height:6px; border-radius:999px; background:rgba(255,255,255,.25);
-  overflow:hidden;
-}
-.scrubber .fill{
-  height:100%; background:#fff; width:40%;
 }

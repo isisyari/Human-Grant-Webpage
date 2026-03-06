@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Human Digest | LakeForest.AI</title>
+  <link rel="stylesheet" href="digest.css">
+  <style>
+    .digest-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .digest-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .digest-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+    .digest-card-header {
+      padding: 2rem;
+      color: white;
+      position: relative;
+    }
+    .digest-card-header.news { background: linear-gradient(135deg, #b61f2a, #d42d3a); }
+    .digest-card-header.higher-ed { background: linear-gradient(135deg, #1a4a6e, #2d7ab8); }
+    .digest-card-header.person { background: linear-gradient(135deg, #f28c28, #e5a44d); }
+    .digest-card-header.terms { background: linear-gradient(135deg, #2d5a27, #4a8c42); }
+    .digest-card-header.fun { background: linear-gradient(135deg, #6a1b9a, #9c4dcc); }
+    .digest-card-header h2 {
+      font-family: 'Room 205', serif;
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .digest-card-header .icon {
+      font-size: 3rem;
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 0.3;
+    }
+    .digest-card-body {
+      padding: 1.5rem;
+    }
+    .digest-card-body p {
+      margin: 0;
+      color: #666;
+      line-height: 1.6;
+    }
+    .digest-card-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .read-more {
+      color: var(--primary-red);
+      font-weight: 600;
+    }
+    .tag {
+      background: var(--light-gray);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="digest-header">
+    <div class="header-inner">
+      <a href="../home.html">
+        <img src="../logo.png" alt="LakeForest.AI" class="header-logo">
+      </a>
+      <a href="../home.html" class="back-link">
+        <span>&larr;</span> Back to Home
+      </a>
+    </div>
+  </header>
+
+  <section class="digest-hero">
+    <h1>Human Digest</h1>
+    <p class="subtitle">Your curated guide to AI news, research, and resources from the Krebs Center</p>
+    <p class="date">March 2026 Edition</p>
+  </section>
+
+  <main class="digest-content" style="max-width: 1100px;">
+    <article class="article-card">
+      <h2>Welcome to Human Digest</h2>
+      <p>Human Digest is an initiative by the Krebs Center to release weekly research on AI-related news, bringing together the latest developments in artificial intelligence with a focus on the humanities, ethics, and education.</p>
+      <p>Explore our curated sections below:</p>
+    </article>
+
+    <div class="digest-grid">
+      <a href="general-news.html" class="digest-card">
+        <div class="digest-card-header news">
+          <h2>AI General News</h2>
+          <span class="icon">&#128240;</span>
+        </div>
+        <div class="digest-card-body">
+          <p>The latest developments in AI from around the world, including industry news, policy updates, and breakthrough announcements.</p>
+        </div>
+        <div class="digest-card-footer">
+          <span class="read-more">Read articles &rarr;</span>
+          <span class="tag">5 articles</span>
+        </div>
+      </a>
+
+      <a href="higher-ed.html" class="digest-card">
+        <div class="digest-card-header higher-ed">
+          <h2>AI in Higher Ed</h2>
+          <span class="icon">&#127891;</span>
+        </div>
+        <div class="digest-card-body">
+          <p>Academic research and scholarly perspectives on artificial intelligence in education, featuring peer-reviewed papers and expert analysis.</p>
+        </div>
+        <div class="digest-card-footer">
+          <span class="read-more">Read research &rarr;</span>
+          <span class="tag">Peer-reviewed</span>
+        </div>
+      </a>
+
+      <a href="someone-to-know.html" class="digest-card">
+        <div class="digest-card-header person">
+          <h2>Someone to Know</h2>
+          <span class="icon">&#128100;</span>
+        </div>
+        <div class="digest-card-body">
+          <p>Profiles of influential voices shaping the conversation around AI and ethics, from researchers to philosophers to industry leaders.</p>
+        </div>
+        <div class="digest-card-footer">
+          <span class="read-more">Meet them &rarr;</span>
+          <span class="tag">Featured</span>
+        </div>
+      </a>
+
+      <a href="terminology.html" class="digest-card">
+        <div class="digest-card-header terms">
+          <h2>AI Terminology</h2>
+          <span class="icon">&#128218;</span>
+        </div>
+        <div class="digest-card-body">
+          <p>Essential terms and concepts for understanding artificial intelligence, from foundational concepts to cutting-edge terminology.</p>
+        </div>
+        <div class="digest-card-footer">
+          <span class="read-more">Learn terms &rarr;</span>
+          <span class="tag">Glossary</span>
+        </div>
+      </a>
+
+      <a href="just-for-fun.html" class="digest-card">
+        <div class="digest-card-header fun">
+          <h2>Just for Fun</h2>
+          <span class="icon">&#127918;</span>
+        </div>
+        <div class="digest-card-body">
+          <p>Interactive AI experiments, games, and creative tools that make learning about artificial intelligence enjoyable and accessible.</p>
+        </div>
+        <div class="digest-card-footer">
+          <span class="read-more">Explore &rarr;</span>
+          <span class="tag">Interactive</span>
+        </div>
+      </a>
+    </div>
+
+    <article class="article-card" style="margin-top: 3rem;">
+      <h2>About the Krebs Center</h2>
+      <p>The Krebs Center at Lake Forest College supports interdisciplinary research and teaching at the intersection of technology, humanities, and social sciences. Through initiatives like Human Digest, we aim to make AI knowledge accessible to everyone.</p>
+      <ul class="resource-list">
+        <li><a href="https://www.lakeforest.edu/academics/human-grant" target="_blank">Learn more about the HUMAN Grant</a></li>
+      </ul>
+    </article>
+  </main>
+
+  <footer class="digest-footer">
+    <p>Human Digest is an initiative by the Krebs Center at Lake Forest College</p>
+    <p><a href="../home.html">Return to LakeForest.AI</a></p>
+  </footer>
+</body>
+</html>

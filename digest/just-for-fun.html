@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Just for Fun | Human Digest | LakeForest.AI</title>
+  <link rel="stylesheet" href="digest.css">
+  <style>
+    .fun-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .fun-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.2s;
+    }
+    .fun-card:hover {
+      transform: translateY(-4px);
+    }
+    .fun-card-image {
+      height: 160px;
+      background: linear-gradient(135deg, var(--primary-red), var(--accent-orange));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+    }
+    .fun-card-content {
+      padding: 1.5rem;
+    }
+    .fun-card h3 {
+      color: var(--primary-red);
+      margin-bottom: 0.5rem;
+    }
+    .fun-card a {
+      display: inline-block;
+      margin-top: 1rem;
+      color: var(--accent-orange);
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .fun-card a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="digest-header">
+    <div class="header-inner">
+      <a href="../home.html">
+        <img src="../logo.png" alt="LakeForest.AI" class="header-logo">
+      </a>
+      <a href="../home.html" class="back-link">
+        <span>&larr;</span> Back to Home
+      </a>
+    </div>
+  </header>
+
+  <section class="digest-hero">
+    <h1>Just for Fun</h1>
+    <p class="subtitle">Explore AI through games, experiments, and creative tools</p>
+    <p class="date">Human Digest | March 2026</p>
+  </section>
+
+  <main class="digest-content">
+    <article class="article-card">
+      <h2>Learn AI the Fun Way</h2>
+      <p>Sometimes the best way to understand something is to play with it. Here are some interactive experiences that make AI concepts accessible and enjoyable.</p>
+    </article>
+
+    <div class="fun-grid">
+      <div class="fun-card">
+        <div class="fun-card-image">&#127912;</div>
+        <div class="fun-card-content">
+          <h3>Quick, Draw!</h3>
+          <p>Can a neural network learn to recognize doodling? Draw something and watch AI try to guess what it is in real-time.</p>
+          <a href="https://quickdraw.withgoogle.com/" target="_blank">Play Now &rarr;</a>
+        </div>
+      </div>
+
+      <div class="fun-card">
+        <div class="fun-card-image">&#127911;</div>
+        <div class="fun-card-content">
+          <h3>AI Duet</h3>
+          <p>Play piano with an AI! This experiment lets you make music with a neural network that responds to your playing.</p>
+          <a href="https://experiments.withgoogle.com/ai-duet" target="_blank">Try It &rarr;</a>
+        </div>
+      </div>
+
+      <div class="fun-card">
+        <div class="fun-card-image">&#128172;</div>
+        <div class="fun-card-content">
+          <h3>Talk to Books</h3>
+          <p>Ask questions and explore passages from books using AI-powered semantic search. A new way to discover literature.</p>
+          <a href="https://books.google.com/talktobooks/" target="_blank">Explore &rarr;</a>
+        </div>
+      </div>
+
+      <div class="fun-card">
+        <div class="fun-card-image">&#128187;</div>
+        <div class="fun-card-content">
+          <h3>Teachable Machine</h3>
+          <p>Train your own machine learning model in the browser. No coding required! Teach a computer to recognize images, sounds, or poses.</p>
+          <a href="https://teachablemachine.withgoogle.com/" target="_blank">Create &rarr;</a>
+        </div>
+      </div>
+
+      <div class="fun-card">
+        <div class="fun-card-image">&#129302;</div>
+        <div class="fun-card-content">
+          <h3>Semantris</h3>
+          <p>Word association games powered by AI. Type words related to the highlighted clue and watch the blocks disappear.</p>
+          <a href="https://research.google.com/semantris/" target="_blank">Play &rarr;</a>
+        </div>
+      </div>
+
+      <div class="fun-card">
+        <div class="fun-card-image">&#127752;</div>
+        <div class="fun-card-content">
+          <h3>AutoDraw</h3>
+          <p>AI that turns your rough sketches into polished clipart. Draw something messy and watch it transform!</p>
+          <a href="https://www.autodraw.com/" target="_blank">Draw &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <article class="article-card highlight">
+      <h2>Why Play Matters</h2>
+      <p>These experiments aren't just fun, they demonstrate real AI concepts:</p>
+      <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+        <li><strong>Pattern Recognition:</strong> Quick, Draw! shows how neural networks learn to identify visual patterns</li>
+        <li><strong>Sequence Prediction:</strong> AI Duet demonstrates how AI can learn musical patterns and improvise</li>
+        <li><strong>Semantic Understanding:</strong> Talk to Books uses natural language processing to understand meaning</li>
+        <li><strong>Transfer Learning:</strong> Teachable Machine shows how models can be quickly trained for new tasks</li>
+      </ul>
+      <p>Playing with AI helps demystify the technology and builds intuition for how these systems work.</p>
+    </article>
+
+    <article class="article-card">
+      <h2>More to Explore</h2>
+      <ul class="resource-list">
+        <li><a href="https://experiments.withgoogle.com/collection/ai" target="_blank">Google AI Experiments Collection</a></li>
+        <li><a href="https://www.aiwithoutmath.com/" target="_blank">AI Without Math - Visual explanations</a></li>
+        <li><a href="https://playground.tensorflow.org/" target="_blank">TensorFlow Neural Network Playground</a></li>
+      </ul>
+    </article>
+  </main>
+
+  <footer class="digest-footer">
+    <p>Human Digest is an initiative by the Krebs Center at Lake Forest College</p>
+    <p><a href="../home.html">Return to LakeForest.AI</a></p>
+  </footer>
+</body>
+</html>

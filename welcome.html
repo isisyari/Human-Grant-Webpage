@@ -1,262 +1,367 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Welcome | LakeForest.AI</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LakeForest.AI</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
-
     @font-face {
-  font-family: 'Room 205';
-  src: url('font/Room205-Regular.otf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-    
-    body, html {
+      font-family: 'Room 205';
+      src: url('font/Room205-Regular.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    :root {
+      --red: #b61f2a;
+      --orange: #f28c28;
+      --charcoal: #1a1a1a;
+      --mist: #f7f7f5;
+    }
+
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Room 205', serif;
-      background-color: #ffffff;
-      background-image: url(lfc.png);
-      color: #080807;
-      height: 100%;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Room 205', Georgia, serif;
+      background: var(--mist);
+      color: var(--charcoal);
+      height: 100vh;
       overflow: hidden;
     }
-    
-    .container {
+
+    .welcome {
       height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
     }
-    
-    .center-content {
-      text-align: center;
-      z-index: 2;
-      position: relative;
-      transition: all 0.5s ease;
-      height: 250px;
-      width:100%;
-      background-color: #ffffff;
-      border-radius:0%;
+
+    /* Grid background */
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(182, 31, 42, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(182, 31, 42, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
     }
-    
-    .center-content.fade-out {
-      opacity: 0;
-      transform: scale(0.95);
+
+    /* Floating nodes */
+    .nodes {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
     }
-    
-    .title {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
+
+    .node {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--red);
+      border-radius: 50%;
+      opacity: 0.15;
     }
-    
-    .title span {
-      color: #b61f2a;
+
+    .node::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--red), transparent);
+      transform-origin: left center;
+      opacity: 0.3;
     }
-    
-    .tagline {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      opacity: 0.8;
-    }
-    
-    .btn {
-      display: inline-block;
-      padding: 15px 40px;
-      background: #f28c28;
-      color: #000000;
-      text-decoration: none;
-      font-weight: 600;
-      border-radius: 8px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: none;
-      font-size: 1.1rem;
-    }
-    
-    .btn:hover {
-      background: #ffffff;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(199, 116, 38, 0.3);
-    }
-    
-    #pixel-transition {
-      position: fixed;
+
+    .node:nth-child(1) { top: 15%; left: 10%; }
+    .node:nth-child(1)::after { transform: rotate(25deg); }
+    .node:nth-child(2) { top: 25%; left: 85%; }
+    .node:nth-child(2)::after { transform: rotate(160deg); }
+    .node:nth-child(3) { top: 70%; left: 15%; }
+    .node:nth-child(3)::after { transform: rotate(-15deg); }
+    .node:nth-child(4) { top: 80%; left: 75%; }
+    .node:nth-child(4)::after { transform: rotate(200deg); }
+    .node:nth-child(5) { top: 45%; left: 5%; }
+    .node:nth-child(5)::after { transform: rotate(5deg); }
+    .node:nth-child(6) { top: 35%; left: 92%; }
+    .node:nth-child(6)::after { transform: rotate(175deg); }
+
+    /* Top accent */
+    .top-line {
+      position: absolute;
       top: 0;
       left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 100;
+      right: 0;
+      height: 3px;
+      background: var(--red);
+    }
+
+    /* Content */
+    .content {
+      text-align: center;
+      z-index: 10;
+      padding: 2rem;
+    }
+
+    .logo-img {
+      height: 65px;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards 0.2s;
+    }
+
+    .title {
+      font-size: 3.2rem;
+      font-weight: normal;
+      letter-spacing: -1px;
+      margin-bottom: 0.6rem;
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards 0.35s;
+    }
+
+    .title span { color: var(--red); }
+    .title em { color: var(--orange); font-style: normal; }
+
+    .tagline {
+      font-size: 1rem;
+      color: #777;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards 0.5s;
+    }
+
+    .enter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: var(--red);
+      border: none;
+      color: #fff;
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      opacity: 0;
+      animation: fadeIn 0.6s ease forwards 0.65s;
+    }
+
+    .enter-btn:hover {
+      background: var(--charcoal);
+      gap: 14px;
+    }
+
+    .enter-btn svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .enter-btn:hover svg {
+      transform: translateX(3px);
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSITION OVERLAY
+       ═══════════════════════════════════════════════════════════ */
+    .transition-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
       pointer-events: none;
       opacity: 0;
-      display: grid;
-      grid-template-columns: repeat(50, 1fr);
-      grid-template-rows: repeat(30, 1fr);
-      gap: 1px;
+      visibility: hidden;
     }
-    
-    .pixel {
-      background: #b61f2a;
-      opacity: 0;
-      transform: scale(0);
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    
-    .pixel.animate {
-      opacity: 1;
-      transform: scale(1);
-    }
-    
-    .pixel.fade-out {
-      opacity: 0;
-      transform: scale(0.8);
-      transition: all 0.6s ease-out;
-    }
-    
 
-    
-    @keyframes fadeInUp {
-      from {
-        opacity: 1;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 0;
-        transform: translateY(0);
-      }
+    .transition-overlay.active {
+      opacity: 1;
+      visibility: visible;
     }
-    
-    @media (max-width: 768px) {
-      .title {
-        font-size: 2rem;
-      }
-      
-      .tagline {
-        font-size: 1rem;
-      }
-      
-      #pixel-transition {
-        grid-template-columns: repeat(30, 1fr);
-        grid-template-rows: repeat(20, 1fr);
+
+    /* Scan line */
+    .scan-line {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--red);
+      box-shadow:
+        0 0 20px var(--red),
+        0 0 60px var(--red),
+        0 0 100px rgba(182, 31, 42, 0.5);
+      transform: translateY(-100%);
+    }
+
+    /* Grid reveal */
+    .reveal-grid {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+    }
+
+    .reveal-cell {
+      background: var(--mist);
+      transform: scaleY(0);
+      transform-origin: top;
+    }
+
+    /* Loading text */
+    .loading-text {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+      font-size: 0.75rem;
+      color: var(--red);
+      letter-spacing: 2px;
+      opacity: 0;
+    }
+
+    /* Final fade */
+    .final-fade {
+      position: absolute;
+      inset: 0;
+      background: var(--mist);
+      opacity: 0;
+    }
+
+    /* Exit state */
+    .welcome.exiting .content {
+      opacity: 0;
+      transform: scale(0.98);
+      filter: blur(4px);
+      transition: all 0.4s ease;
+    }
+
+    .welcome.exiting .grid-bg,
+    .welcome.exiting .nodes {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    @media (max-width: 600px) {
+      .title { font-size: 2.2rem; }
+      .tagline { font-size: 0.9rem; }
+      .logo-img { height: 50px; }
+      .reveal-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
       }
     }
   </style>
 </head>
 <body>
-  <!-- Welcome Screen -->
-  <div class="container" id="welcomeScreen">
-    <div class="center-content" id="centerContent">
-      <h1 class="title">Welcome to <span>LakeForest.AI</span></h1>
-      <p class="tagline">Exploring the intersection of AI, the humanities, and ethics.</p>
-      <button class="btn" id="startBtn">Get Started</button>
+  <div class="welcome" id="welcome">
+    <div class="grid-bg"></div>
+    <div class="nodes">
+      <div class="node"></div>
+      <div class="node"></div>
+      <div class="node"></div>
+      <div class="node"></div>
+      <div class="node"></div>
+      <div class="node"></div>
+    </div>
+    <div class="top-line"></div>
+
+    <div class="content">
+      <img src="logo.png" alt="Lake Forest College" class="logo-img">
+      <h1 class="title"><span>Lake</span>Forest.<em>AI</em></h1>
+      <p class="tagline">Exploring AI, the Humanities & Ethics</p>
+      <button class="enter-btn" id="enterBtn">
+        Enter
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </button>
     </div>
   </div>
 
-  <!-- Pixel Transition Layer -->
-  <div id="pixel-transition"></div>
-
-
+  <div class="transition-overlay" id="overlay">
+    <div class="scan-line" id="scanLine"></div>
+    <div class="reveal-grid" id="revealGrid"></div>
+    <div class="loading-text" id="loadingText">INITIALIZING</div>
+    <div class="final-fade" id="finalFade"></div>
+  </div>
 
   <script>
-    document.getElementById('startBtn').addEventListener('click', (e) => {
-      e.preventDefault();
-      
-      // Fade out the welcome content
-      const centerContent = document.getElementById('centerContent');
-      centerContent.classList.add('fade-out');
-      
-      // Show pixel transition
-      const transition = document.getElementById('pixel-transition');
-      transition.style.opacity = 1;
-      
-      // Calculate grid dimensions
-      const cols = 50;
-      const rows = 30;
-      const totalPixels = cols * rows;
-      
-      // Create pixels
-      for (let i = 0; i < totalPixels; i++) {
-        const pixel = document.createElement('div');
-        pixel.classList.add('pixel');
-        transition.appendChild(pixel);
-      }
-      
-      // Animate pixels in waves (build up)
-      const pixels = document.querySelectorAll('.pixel');
-      
-      // Create a wave effect from center outward
-      pixels.forEach((pixel, index) => {
-        const row = Math.floor(index / cols);
-        const col = index % cols;
-        
-        // Calculate distance from center
-        const centerRow = rows / 2;
-        const centerCol = cols / 2;
-        const distance = Math.sqrt(
-          Math.pow(row - centerRow, 2) + Math.pow(col - centerCol, 2)
-        );
-        
-        // Add some randomness
-        const randomDelay = Math.random() * 150;
-        const delay = (distance * 25) + randomDelay;
-        
+    const enterBtn = document.getElementById('enterBtn');
+    const welcome = document.getElementById('welcome');
+    const overlay = document.getElementById('overlay');
+    const scanLine = document.getElementById('scanLine');
+    const revealGrid = document.getElementById('revealGrid');
+    const loadingText = document.getElementById('loadingText');
+    const finalFade = document.getElementById('finalFade');
+
+    // Create grid cells
+    const cols = window.innerWidth <= 600 ? 4 : 8;
+    const rows = window.innerWidth <= 600 ? 4 : 6;
+    for (let i = 0; i < cols * rows; i++) {
+      const cell = document.createElement('div');
+      cell.className = 'reveal-cell';
+      revealGrid.appendChild(cell);
+    }
+    const cells = revealGrid.querySelectorAll('.reveal-cell');
+
+    enterBtn.addEventListener('click', () => {
+      // Start exit
+      welcome.classList.add('exiting');
+      overlay.classList.add('active');
+
+      // Show loading text
+      loadingText.style.transition = 'opacity 0.3s';
+      loadingText.style.opacity = '1';
+
+      // Animate scan line down
+      scanLine.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+      scanLine.style.transform = 'translateY(100vh)';
+
+      // Reveal cells row by row as scan passes
+      cells.forEach((cell, i) => {
+        const row = Math.floor(i / cols);
+        const delay = 100 + (row * 120);
+
         setTimeout(() => {
-          pixel.classList.add('animate');
+          cell.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+          cell.style.transform = 'scaleY(1)';
         }, delay);
       });
-      
-      // After pixels build up, start fading them out
+
+      // Update loading text
       setTimeout(() => {
-        pixels.forEach((pixel, index) => {
-          const row = Math.floor(index / cols);
-          const col = index % cols;
-          
-          // Calculate distance from center for fade out
-          const centerRow = rows / 2;
-          const centerCol = cols / 2;
-          const distance = Math.sqrt(
-            Math.pow(row - centerRow, 2) + Math.pow(col - centerCol, 2)
-          );
-          
-          const randomDelay = Math.random() * 100;
-          const delay = (distance * 15) + randomDelay;
-          
-          setTimeout(() => {
-            pixel.classList.add('fade-out');
-          }, delay);
-        });
-      }, 1200);
-      
-      // Redirect after smooth fade out completes
+        loadingText.textContent = 'LOADING MODULES';
+      }, 400);
+
       setTimeout(() => {
-        // Add a final fade on the entire transition
-        transition.style.transition = 'opacity 0.5s ease-out';
-        transition.style.opacity = '0';
-        
-        setTimeout(() => {
-          window.location.href = 'home.html';
-        }, 500);
-      }, 2200);
-    });
-    
-    // Add some interactive hover effects
-    document.addEventListener('mousemove', (e) => {
-      const centerContent = document.getElementById('centerContent');
-      if (centerContent && !centerContent.classList.contains('fade-out')) {
-        const rect = centerContent.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        
-        const deltaX = (e.clientX - centerX) * 0.01;
-        const deltaY = (e.clientY - centerY) * 0.01;
-        
-        centerContent.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
-      }
+        loadingText.textContent = 'READY';
+      }, 700);
+
+      // Final fade and redirect
+      setTimeout(() => {
+        loadingText.style.opacity = '0';
+        finalFade.style.transition = 'opacity 0.3s ease';
+        finalFade.style.opacity = '1';
+      }, 900);
+
+      setTimeout(() => {
+        window.location.href = 'home.html';
+      }, 1150);
     });
   </script>
 </body>
