@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anya Golovkova | HUMAN Fellows</title>
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       THE CATALOGUE — Fellow Detail Page
+       ═══════════════════════════════════════════════════════════════ */
+
+    @font-face {
+      font-family: 'Room 205';
+      src: url('font/Room205-Regular.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    :root {
+      --paper: #FAF8F3;
+      --paper-dark: #F0EDE6;
+      --red: #B61F2A;
+      --red-dark: #8B1820;
+      --charcoal: #1C1C1C;
+      --slate: #4A4A4A;
+      --muted: #888;
+      --rule: rgba(28, 28, 28, 0.1);
+      --rule-dark: rgba(28, 28, 28, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Crimson Pro', 'Crimson Text', Georgia, serif;
+      background: var(--paper);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-size: 18px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Header
+       ───────────────────────────────────────────────────────────────── */
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-logo {
+      height: 40px;
+      width: auto;
+    }
+
+    .header-title {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: normal;
+      color: var(--charcoal);
+    }
+
+    .header-title span {
+      color: var(--red);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: var(--slate);
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--charcoal);
+    }
+
+    nav a.active {
+      color: var(--charcoal);
+    }
+
+    nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--red);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Back Link
+       ───────────────────────────────────────────────────────────────── */
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+      margin-bottom: 2rem;
+    }
+
+    .back-link:hover {
+      color: var(--charcoal);
+    }
+
+    .back-link svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s;
+    }
+
+    .back-link:hover svg {
+      transform: translateX(-4px);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Fellow Detail Layout
+       ───────────────────────────────────────────────────────────────── */
+
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 8rem 3rem 4rem;
+    }
+
+    .fellow-header {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+    }
+
+    .fellow-index {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+
+    .fellow-catalogue {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 3rem;
+      color: var(--red);
+      opacity: 0.15;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .fellow-year {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .fellow-main {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 3rem;
+    }
+
+    .fellow-portrait {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+
+    .fellow-portrait img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      filter: grayscale(10%);
+    }
+
+    .fellow-portrait figcaption {
+      margin-top: 1rem;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .fellow-info h1 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 2.5rem;
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 0.5rem;
+    }
+
+    .fellow-title {
+      font-size: 1.1rem;
+      color: var(--slate);
+      margin-bottom: 0.5rem;
+    }
+
+    .fellow-affiliation {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 2rem;
+    }
+
+    .fellow-project-title {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: normal;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Project Description
+       ───────────────────────────────────────────────────────────────── */
+
+    .project-description {
+      max-width: 65ch;
+    }
+
+    .project-description p {
+      margin-bottom: 1.5rem;
+    }
+
+    .project-description p:first-of-type::first-letter {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 3.5rem;
+      float: left;
+      line-height: 1;
+      padding-right: 0.75rem;
+      color: var(--red);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Project Images
+       ───────────────────────────────────────────────────────────────── */
+
+    .project-images {
+      margin: 3rem 0;
+      padding: 2rem 0;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .project-images h3 {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-image {
+      background: var(--paper-dark);
+    }
+
+    .project-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .project-image figcaption {
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--slate);
+      line-height: 1.4;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Meta Information
+       ───────────────────────────────────────────────────────────────── */
+
+    .project-meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .meta-item h4 {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .meta-item p {
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .meta-item a {
+      color: var(--red);
+      transition: color 0.2s;
+    }
+
+    .meta-item a:hover {
+      color: var(--charcoal);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Navigation
+       ───────────────────────────────────────────────────────────────── */
+
+    .fellow-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .fellow-nav a {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      max-width: 300px;
+      transition: color 0.2s;
+    }
+
+    .fellow-nav a:hover {
+      color: var(--red);
+    }
+
+    .fellow-nav .nav-label {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .fellow-nav .nav-name {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.1rem;
+    }
+
+    .fellow-nav .next {
+      text-align: right;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Footer
+       ───────────────────────────────────────────────────────────────── */
+
+    footer {
+      background: var(--charcoal);
+      color: var(--paper);
+      margin-top: 4rem;
+    }
+
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      height: 120px;
+      margin-left: 30px;
+      width: 120px;
+    }
+
+    .footer-tagline {
+      font-size: 0.85rem;
+      opacity: 0.6;
+      line-height: 1.5;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .footer-col h5 {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 3rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Animations
+       ───────────────────────────────────────────────────────────────── */
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Responsive
+       ───────────────────────────────────────────────────────────────── */
+
+    @media (max-width: 1100px) {
+      .fellow-header,
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .fellow-index {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        position: static;
+      }
+
+      .fellow-catalogue {
+        font-size: 2rem;
+      }
+
+      .fellow-main {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .fellow-portrait {
+        position: static;
+        max-width: 300px;
+      }
+
+      .images-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-inner {
+        padding: 1rem 1.5rem;
+      }
+
+      nav {
+        display: none;
+      }
+
+      main {
+        padding: 6rem 1.5rem 2rem;
+      }
+
+      .fellow-info h1 {
+        font-size: 1.75rem;
+      }
+
+      .project-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="header-brand">
+        <img src="logo.png" alt="Lake Forest College" class="header-logo">
+        <span class="header-title"><span>HUMAN</span> Initiative</span>
+      </a>
+      <nav>
+        <a href="index.html#fellows" class="active">Fellows</a>
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="book-club.html">Book Club</a>
+        <a href="digest/index.html">Digest</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <a href="index.html#fellows" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      Back to Fellows Archive
+    </a>
+
+    <article class="fellow-header">
+      <div class="fellow-index animate-in">
+        <div class="fellow-catalogue">26.01</div>
+        <div class="fellow-year">2026-27 Cohort</div>
+      </div>
+
+      <div class="fellow-main">
+        <figure class="fellow-portrait animate-in delay-1">
+          <img src="fellows/golovkova.jpg" alt="Anya Golovkova">
+          <figcaption>Lake Forest College</figcaption>
+        </figure>
+
+        <div class="fellow-info animate-in delay-2">
+          <h1>Anya Golovkova</h1>
+          <p class="fellow-title">HUMAN Fellow</p>
+          <p class="fellow-affiliation">Lake Forest College</p>
+
+          <h2 class="fellow-project-title">Vibe Philology: Translation of the Glory of the Goddess</h2>
+
+          <div class="project-description">
+            <p>Vibe Philology: Translation of the Glory of the Goddess is a humanities-driven project that develops an innovative approach to translation at the intersection of philology, ethnography, and artificial intelligence. Borrowing from the idea of 'vibe coding'—an intuitive, iterative approach to programming that works alongside AI—'vibe philology' names a mode of translation that integrates close reading with affective, contextual, and AI-assisted interpretation.</p>
+
+            <p>The project centers on producing a new translation of the Devi Mahatmyam (Glory of the Goddess), a foundational Sanskrit text (c. sixth–eighth centuries CE) that remains widely recited in contemporary ritual contexts across South Asia. While the text has been translated multiple times, existing translations largely privilege textual and theological analysis, often neglecting its lived, performed, and affective dimensions. This project asks: how might translation better capture not only semantic meaning, but also ritual "vibe"—the sonic, embodied, and interpretive textures through which texts are experienced in practice?</p>
+
+            <p>The project engages core humanistic practices including close reading of Sanskrit source material, comparative analysis of existing translations, and interpretive attention to poetics, metaphor, and theological nuance. It also draws on ethnographic insight into recitation practices, treating performance, repetition, and oral transmission as interpretive frameworks that inform translation choices.</p>
+
+            <p>AI will be engaged both as a tool and as an object of critical inquiry. Using platforms such as DharmaMitra, Claude, and ChatGPT, the project will experiment with AI-assisted Sanskrit parsing, lexical analysis, and translation alignment, enabling rapid comparison across grammatical possibilities and semantic ranges. Large language models will be used to generate draft translations, identify patterns across commentarial traditions, and assist in organizing variant readings. At the same time, the project will critically evaluate these outputs, examining how AI systems handle ambiguity, poetic density, and culturally embedded concepts that resist straightforward equivalence.</p>
+
+            <p>A key component of the project is assessing bias and limitation in AI-generated translations. Sanskrit texts such as the Devi Mahatmyam present challenges including polyvalent vocabulary, non-linear syntax, and layered theological meanings. AI tools often flatten these complexities, privileging standardized or normative interpretations that may obscure regional, ritual, or non-orthodox traditions.</p>
+          </div>
+
+          <div class="project-images">
+            <h3>Project Documentation</h3>
+            <div class="images-grid">
+              <figure class="project-image">
+                <img src="fellows/golovkova-manuscript.jpg" alt="Manuscript of the Devi Mahatmyam">
+                <figcaption>Manuscript of the Devi Mahatmyam (Glory of the Goddess) at LACMA (Los Angeles County Museum of Art)</figcaption>
+              </figure>
+              <figure class="project-image">
+                <img src="fellows/golovkova-durga.jpg" alt="Durga as Slayer of Mahisasura at Mahabalipuram">
+                <figcaption>Durga as Slayer of the Demon Mahisasura at Mahabalipuram (photo by author)</figcaption>
+              </figure>
+            </div>
+          </div>
+
+          <div class="project-meta">
+            <div class="meta-item">
+              <h4>Course Integration</h4>
+              <p>RELG 214: Avatars, Goddesses, and Demons: Hindu Tales of Liberation and Wonder (Summer 2027)</p>
+            </div>
+            <div class="meta-item">
+              <h4>Focus Areas</h4>
+              <p>Philology, Ethnography, AI Translation, Sanskrit Studies, Religious Studies</p>
+            </div>
+            <div class="meta-item">
+              <h4>AI Tools</h4>
+              <p>DharmaMitra, Claude, ChatGPT</p>
+            </div>
+            <div class="meta-item">
+              <h4>Expected Impact</h4>
+              <p>Critically examining how AI translation tools reproduce dominant linguistic and cultural assumptions, developing ethically informed approaches to AI use in the humanities.</p>
+            </div>
+          </div>
+
+          <nav class="fellow-nav">
+            <a href="index.html#fellows" class="prev">
+              <span class="nav-label">&larr; Archive</span>
+              <span class="nav-name">All Fellows</span>
+            </a>
+            <a href="fellow-corey.html" class="next">
+              <span class="nav-label">Next Fellow &rarr;</span>
+              <span class="nav-name">Josh Corey</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Lake Forest College" class="footer-logo">
+        <p class="footer-tagline">Exploring AI through the humanities with emphasis on equity and justice.</p>
+      </div>
+      <div class="footer-content">
+        <div class="footer-col">
+          <h5>Archive</h5>
+          <a href="fellows.html">All Fellows</a>
+          <a href="fellows.html#2026">2026-27 Cohort</a>
+          <a href="fellows.html#2025">2025-26 Cohort</a>
+          <a href="fellows.html#2024">2024-25 Cohort</a>
+        </div>
+        <div class="footer-col">
+          <h5>Program</h5>
+          <a href="about.html">About HUMAN</a>
+          <a href="team.html">Team</a>
+          <a href="courses.html">Courses</a>
+          <a href="book-club.html">Book Club</a>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <a href="digest/index.html">HUMAN Digest</a>
+          <a href="https://www.lakeforest.edu/academics/centers/krebs" target="_blank">Krebs Center</a>
+          <a href="https://mellon.org/" target="_blank">Mellon Foundation</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2024-2026 Lake Forest College. HUMAN Initiative.</span>
+      <div class="footer-links">
+        <a href="https://www.lakeforest.edu" target="_blank">Lake Forest College</a>
+        <a href="mailto:human@lakeforest.edu">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

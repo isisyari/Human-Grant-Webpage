@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUMAN | Lake Forest College</title>
+  <style>
+    /* ═══════════════════════════════════════════════════════════════
+       THE CATALOGUE — HUMAN Grant Website
+       Direction A: Archival, numbered, museum-collection feel
+       ═══════════════════════════════════════════════════════════════ */
+
+    @font-face {
+      font-family: 'Room 205';
+      src: url('font/Room205-Regular.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    :root {
+      --paper: #FAF8F3;
+      --paper-dark: #F0EDE6;
+      --red: #B61F2A;
+      --red-dark: #8B1820;
+      --charcoal: #1C1C1C;
+      --slate: #4A4A4A;
+      --muted: #888;
+      --rule: rgba(28, 28, 28, 0.1);
+      --rule-dark: rgba(28, 28, 28, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Crimson Pro', 'Crimson Text', Georgia, serif;
+      background: var(--paper);
+      color: var(--charcoal);
+      line-height: 1.6;
+      font-size: 17px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Typography
+       ───────────────────────────────────────────────────────────────── */
+
+    .display {
+      font-family: 'Room 205', Georgia, serif;
+      font-weight: normal;
+      letter-spacing: -0.02em;
+    }
+
+    .mono {
+      font-family: 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+      font-size: 0.75em;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .sans {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Header
+       ───────────────────────────────────────────────────────────────── */
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-logo {
+      height: 40px;
+      width: auto;
+    }
+
+    .header-title {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.1rem;
+      font-weight: normal;
+      color: var(--charcoal);
+    }
+
+    .header-title span {
+      color: var(--red);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    nav a {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: var(--slate);
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--charcoal);
+    }
+
+    nav a.active {
+      color: var(--charcoal);
+    }
+
+    nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--red);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Hero
+       ───────────────────────────────────────────────────────────────── */
+
+    .hero {
+      padding: 10rem 3rem 6rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+    }
+
+    .hero-index {
+      padding-top: 0.5rem;
+    }
+
+    .hero-number {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 4rem;
+      color: var(--red);
+      opacity: 0.15;
+      line-height: 1;
+    }
+
+    .hero-label {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    .hero-content h1 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 3.5rem;
+      font-weight: normal;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      max-width: 700px;
+    }
+
+    .hero-content h1 em {
+      font-style: normal;
+      color: var(--red);
+    }
+
+    .hero-content .lead {
+      font-size: 1.25rem;
+      color: var(--slate);
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .hero-meta-label {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-meta-value {
+      font-size: 1rem;
+      color: var(--charcoal);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Section Layout
+       ───────────────────────────────────────────────────────────────── */
+
+    section {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 4rem 3rem;
+    }
+
+    .section-grid {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+    }
+
+    .section-index {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+
+    .section-number {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 2.5rem;
+      color: var(--red);
+      opacity: 0.12;
+      line-height: 1;
+    }
+
+    .section-label {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    .section-title {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: normal;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-desc {
+      color: var(--slate);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 0;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Fellows Grid
+       ───────────────────────────────────────────────────────────────── */
+
+    .fellows-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .fellows-filter {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .filter-btn {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid var(--rule-dark);
+      color: var(--slate);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--charcoal);
+      border-color: var(--charcoal);
+      color: var(--paper);
+    }
+
+    .fellows-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .fellow-card {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fellow-card:hover {
+      border-color: var(--rule-dark);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    }
+
+    .fellow-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--red);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s ease;
+    }
+
+    .fellow-card:hover::before {
+      transform: scaleY(1);
+    }
+
+    .fellow-image {
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--paper-dark);
+    }
+
+    .fellow-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%);
+      transition: all 0.4s ease;
+    }
+
+    .fellow-card:hover .fellow-image img {
+      filter: grayscale(0%);
+      transform: scale(1.03);
+    }
+
+    .fellow-info {
+      padding: 1.25rem;
+    }
+
+    .fellow-catalogue {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .fellow-name {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .fellow-project {
+      font-size: 0.9rem;
+      color: var(--slate);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .view-all-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      transition: color 0.2s;
+    }
+
+    .view-all-link:hover {
+      color: var(--red);
+    }
+
+    .view-all-link svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.2s;
+    }
+
+    .view-all-link:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Digest Section
+       ───────────────────────────────────────────────────────────────── */
+
+    .digest-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .digest-card {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--paper-dark);
+    }
+
+    .digest-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .digest-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .digest-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,28,28,0.85) 0%, rgba(28,28,28,0.2) 50%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.25rem;
+      color: #fff;
+    }
+
+    .digest-tag {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.25rem;
+    }
+
+    .digest-title {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1rem;
+    }
+
+    .digest-archive {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--rule);
+      background: var(--paper);
+      transition: all 0.2s;
+    }
+
+    .digest-archive:hover {
+      border-color: var(--red);
+      background: var(--paper-dark);
+    }
+
+    .digest-archive span {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+
+    .digest-archive .arrow {
+      font-size: 1.5rem;
+      color: var(--red);
+      margin-top: 0.5rem;
+      transition: transform 0.2s;
+    }
+
+    .digest-archive:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Two Column Layout (Reads + Projects / Podcasts)
+       ───────────────────────────────────────────────────────────────── */
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 4rem;
+    }
+
+    /* Reads */
+    .reads-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .read-item {
+      display: grid;
+      grid-template-columns: 50px 1fr;
+      gap: 1.25rem;
+      padding: 1.25rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+      transition: all 0.2s;
+    }
+
+    .read-item:hover {
+      border-color: var(--rule-dark);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    }
+
+    .read-number {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 2rem;
+      color: var(--red);
+      opacity: 0.2;
+      line-height: 1;
+    }
+
+    .read-content h4 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1rem;
+      font-weight: normal;
+      margin-bottom: 0.15rem;
+    }
+
+    .read-content h4 a {
+      transition: color 0.2s;
+    }
+
+    .read-content h4 a:hover {
+      color: var(--red);
+    }
+
+    .read-author {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .read-content p {
+      font-size: 0.875rem;
+      color: var(--slate);
+      line-height: 1.5;
+    }
+
+    /* Projects */
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .project-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--red);
+      transition: all 0.2s;
+    }
+
+    .project-item:hover {
+      border-color: var(--rule-dark);
+      border-left-color: var(--charcoal);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    }
+
+    .project-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--charcoal);
+      color: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+
+    .project-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .project-content h4 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1rem;
+      font-weight: normal;
+      margin-bottom: 0.25rem;
+    }
+
+    .project-content p {
+      font-size: 0.8rem;
+      color: var(--slate);
+      line-height: 1.4;
+    }
+
+    .project-arrow {
+      color: var(--muted);
+      font-size: 1.25rem;
+      transition: all 0.2s;
+    }
+
+    .project-item:hover .project-arrow {
+      color: var(--red);
+      transform: translateX(3px);
+    }
+
+    /* Podcasts */
+    .podcasts-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .podcast-card {
+      position: relative;
+      aspect-ratio: 1;
+      overflow: hidden;
+    }
+
+    .podcast-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .podcast-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .podcast-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,28,28,0.9) 0%, rgba(28,28,28,0.3) 60%, transparent 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1rem;
+      color: #fff;
+    }
+
+    .podcast-overlay h4 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 0.9rem;
+      font-weight: normal;
+      line-height: 1.2;
+      margin-bottom: 0.15rem;
+    }
+
+    .podcast-overlay p {
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+
+    .podcast-play {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.9);
+      width: 44px;
+      height: 44px;
+      background: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .podcast-play svg {
+      width: 18px;
+      height: 18px;
+      margin-left: 3px;
+      fill: var(--charcoal);
+    }
+
+    .podcast-card:hover .podcast-play {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Footer
+       ───────────────────────────────────────────────────────────────── */
+
+    footer {
+      background: var(--charcoal);
+      color: var(--paper);
+      margin-top: 4rem;
+    }
+
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .footer-logo {
+      height: 120px;
+      margin-left: 30px;
+      width: 120px;
+    }
+
+    .footer-tagline {
+      font-size: 0.85rem;
+      opacity: 0.6;
+      line-height: 1.5;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .footer-col h5 {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.5rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 3rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      opacity: 0.5;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-links a {
+      font-size: 0.8rem;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Animations
+       ───────────────────────────────────────────────────────────────── */
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Responsive
+       ───────────────────────────────────────────────────────────────── */
+
+    @media (max-width: 1100px) {
+      .hero,
+      .section-grid,
+      .footer-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .hero-index,
+      .section-index {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .hero-number,
+      .section-number {
+        font-size: 2rem;
+      }
+
+      .two-col {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+      }
+
+      .fellows-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-inner {
+        padding: 1rem 1.5rem;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero,
+      section {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+
+      .hero-content h1 {
+        font-size: 2.25rem;
+      }
+
+      .hero-meta {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .fellows-grid,
+      .digest-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Splash Screen
+       ───────────────────────────────────────────────────────────────── */
+
+    .splash {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: var(--charcoal);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .splash.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .splash-logo {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: splashFadeIn 0.8s ease 0.2s forwards;
+    }
+
+    .splash-title {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 2.5rem;
+      color: var(--paper);
+      letter-spacing: 0.1em;
+      opacity: 0;
+      animation: splashFadeIn 0.8s ease 0.5s forwards;
+    }
+
+    .splash-title span {
+      color: var(--red);
+    }
+
+    .splash-subtitle {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 1rem;
+      opacity: 0;
+      animation: splashFadeIn 0.8s ease 0.8s forwards;
+    }
+
+    .splash-line {
+      width: 60px;
+      height: 1px;
+      background: var(--red);
+      margin-top: 2rem;
+      transform: scaleX(0);
+      animation: splashLine 0.6s ease 1.1s forwards;
+    }
+
+    @keyframes splashFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes splashLine {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+
+    /* ─────────────────────────────────────────────────────────────────
+       Google Fonts Loader
+       ───────────────────────────────────────────────────────────────── */
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div class="splash" id="splash">
+    <img src="logo.png" alt="HUMAN" class="splash-logo">
+    <h1 class="splash-title"><span>HUMAN</span> Initiative</h1>
+    <p class="splash-subtitle">AI & the Humanities at Lake Forest College</p>
+    <div class="splash-line"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="header-brand">
+        <img src="logo.png" alt="Lake Forest College" class="header-logo">
+        <span class="header-title"><span>HUMAN</span> Initiative</span>
+      </a>
+      <nav>
+        <a href="#fellows" class="active">Fellows</a>
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="book-club.html">Book Club</a>
+        <a href="digest/index.html">Digest</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-index animate-in">
+      <div class="hero-number">01</div>
+      <div class="hero-label">Initiative</div>
+    </div>
+    <div class="hero-content">
+      <h1 class="animate-in delay-1">Humanities Understanding of the <em>Machine-Assisted</em> Nexus</h1>
+      <p class="lead animate-in delay-2">A $1.2 million Mellon Foundation initiative exploring artificial intelligence through the humanities, with emphasis on equity and justice.</p>
+      <div class="hero-meta animate-in delay-3">
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Institution</span>
+          <span class="hero-meta-value">Lake Forest College</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Duration</span>
+          <span class="hero-meta-value">2024 — Present</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Fellows</span>
+          <span class="hero-meta-value">18 Projects</span>
+        </div>
+        <div class="hero-meta-item">
+          <span class="hero-meta-label">Partners</span>
+          <span class="hero-meta-value">3 Organizations</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Fellows Section -->
+  <section id="fellows">
+    <div class="section-grid">
+      <div class="section-index">
+        <div class="section-number">02</div>
+        <div class="section-label">Archive</div>
+      </div>
+      <div class="section-content">
+        <div class="fellows-header">
+          <div>
+            <h2 class="section-title">HUMAN Fellows</h2>
+            <p class="section-desc">Faculty exploring AI through humanistic practice, developing courses, research projects, and publications.</p>
+          </div>
+          <div class="fellows-filter">
+            <button class="filter-btn active">All</button>
+            <button class="filter-btn">2026-27</button>
+            <button class="filter-btn">2025-26</button>
+            <button class="filter-btn">2024-25</button>
+          </div>
+        </div>
+
+        <div class="fellows-grid">
+          <!-- 2026-27 Fellows -->
+          <a href="fellow-golovkova.html" class="fellow-card">
+            <div class="fellow-image">
+              <img src="fellows/golovkova.jpg" alt="Anya Golovkova">
+            </div>
+            <div class="fellow-info">
+              <div class="fellow-catalogue">HUMAN.26.01</div>
+              <h3 class="fellow-name">Anya Golovkova</h3>
+              <p class="fellow-project">Vibe Philology: Translation of the Glory of the Goddess</p>
+            </div>
+          </a>
+
+          <a href="fellow-corey.html" class="fellow-card">
+            <div class="fellow-image">
+              <img src="fellows/corey.png" alt="Josh Corey">
+            </div>
+            <div class="fellow-info">
+              <div class="fellow-catalogue">HUMAN.26.02</div>
+              <h3 class="fellow-name">Josh Corey</h3>
+              <p class="fellow-project">Speculative Fiction in the Age of Artificial Intimacy</p>
+            </div>
+          </a>
+
+          <a href="fellow-henne.html" class="fellow-card">
+            <div class="fellow-image">
+              <img src="fellows/henne.jpg" alt="Paul Henne">
+            </div>
+            <div class="fellow-info">
+              <div class="fellow-catalogue">HUMAN.26.03</div>
+              <h3 class="fellow-name">Paul Henne</h3>
+              <p class="fellow-project">How Ordinary People Think About Artificial Intelligence</p>
+            </div>
+          </a>
+
+          <a href="fellow-kee.html" class="fellow-card">
+            <div class="fellow-image">
+              <img src="fellows/kee.jpg" alt="Justin Kee">
+            </div>
+            <div class="fellow-info">
+              <div class="fellow-catalogue">HUMAN.26.04</div>
+              <h3 class="fellow-name">Justin Kee</h3>
+              <p class="fellow-project">Four Souls in the Machine</p>
+            </div>
+          </a>
+
+          <a href="fellow-meyer.html" class="fellow-card">
+            <div class="fellow-image">
+              <img src="fellows/meyer.jpg" alt="Don Meyer">
+            </div>
+            <div class="fellow-info">
+              <div class="fellow-catalogue">HUMAN.26.05</div>
+              <h3 class="fellow-name">Don Meyer</h3>
+              <p class="fellow-project">American Dark Ages: Further Explorations into Generative AI</p>
+            </div>
+          </a>
+
+          <a href="fellow-rovner.html" class="fellow-card">
+            <div class="fellow-image">
+              <img src="fellows/rovner.jpg" alt="Mel Rovner">
+            </div>
+            <div class="fellow-info">
+              <div class="fellow-catalogue">HUMAN.26.06</div>
+              <h3 class="fellow-name">Mel Rovner</h3>
+              <p class="fellow-project">Critical Analysis of Architectural History Pedagogy</p>
+            </div>
+          </a>
+        </div>
+
+        <a href="fellows.html" class="view-all-link">
+          View Complete Archive
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Digest Section -->
+  <section id="digest">
+    <div class="section-grid">
+      <div class="section-index">
+        <div class="section-number">03</div>
+        <div class="section-label">Digest</div>
+      </div>
+      <div class="section-content">
+        <h2 class="section-title">HUMAN Digest</h2>
+        <p class="section-desc">Weekly research on AI-related news from the Krebs Center.</p>
+
+        <div class="digest-grid">
+          <a href="digest/general-news.html" class="digest-card">
+            <img src="piece_1_1.png" alt="AI General News">
+            <div class="digest-overlay">
+              <span class="digest-tag">News</span>
+              <span class="digest-title">AI General News</span>
+            </div>
+          </a>
+
+          <a href="digest/higher-ed.html" class="digest-card">
+            <img src="piece_1_2.png" alt="AI in Higher Education">
+            <div class="digest-overlay">
+              <span class="digest-tag">Research</span>
+              <span class="digest-title">AI in Higher Ed</span>
+            </div>
+          </a>
+
+          <a href="digest/someone-to-know.html" class="digest-card">
+            <img src="piece_1_3.png" alt="Someone to Know">
+            <div class="digest-overlay">
+              <span class="digest-tag">Profile</span>
+              <span class="digest-title">Someone to Know</span>
+            </div>
+          </a>
+
+          <a href="digest/terminology.html" class="digest-card">
+            <img src="piece_2_1.png" alt="AI Terminology">
+            <div class="digest-overlay">
+              <span class="digest-tag">Glossary</span>
+              <span class="digest-title">AI Terminology</span>
+            </div>
+          </a>
+
+          <a href="digest/just-for-fun.html" class="digest-card">
+            <img src="piece_2_2.png" alt="Just for Fun">
+            <div class="digest-overlay">
+              <span class="digest-tag">Fun</span>
+              <span class="digest-title">Just for Fun</span>
+            </div>
+          </a>
+
+          <a href="digest/index.html" class="digest-card digest-archive">
+            <span>View Archive</span>
+            <span class="arrow">&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Reads & Projects Section -->
+  <section id="resources">
+    <div class="section-grid">
+      <div class="section-index">
+        <div class="section-number">04</div>
+        <div class="section-label">Resources</div>
+      </div>
+      <div class="section-content">
+        <div class="two-col">
+          <!-- Reads -->
+          <div>
+            <h2 class="section-title">Relevant Reads</h2>
+            <p class="section-desc">Recommended by the Krebs Center research team.</p>
+
+            <div class="reads-list">
+              <article class="read-item">
+                <div class="read-number">01</div>
+                <div class="read-content">
+                  <h4><a href="https://www.amazon.com/God-Human-Animal-Machine-Technology/dp/0385543824" target="_blank">God, Human, Animal, Machine</a></h4>
+                  <span class="read-author">Meghan O'Gieblyn</span>
+                  <p>A strikingly original exploration of what it might mean to be authentically human in the age of artificial intelligence.</p>
+                </div>
+              </article>
+
+              <article class="read-item">
+                <div class="read-number">02</div>
+                <div class="read-content">
+                  <h4><a href="https://a.co/d/eHHXgoa" target="_blank">Co-Intelligence</a></h4>
+                  <span class="read-author">Ethan Mollick</span>
+                  <p>Wharton professor explores how AI is reshaping work, learning, and creativity, urging us to partner with smart machines.</p>
+                </div>
+              </article>
+
+              <article class="read-item">
+                <div class="read-number">03</div>
+                <div class="read-content">
+                  <h4><a href="https://a.co/d/c3MWeM2" target="_blank">AI Engineering</a></h4>
+                  <span class="read-author">Chip Huyen</span>
+                  <p>A practical guide to building AI apps with foundation models. Tools, techniques, and workflows for reliable AI development.</p>
+                </div>
+              </article>
+
+              <article class="read-item">
+                <div class="read-number">04</div>
+                <div class="read-content">
+                  <h4><a href="https://a.co/d/8AjcZa4" target="_blank">Nexus</a></h4>
+                  <span class="read-author">Yuval Noah Harari</span>
+                  <p>How information networks have shaped human history, from ancient myths to modern AI, and the urgent choices we face.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Projects -->
+          <div>
+            <h2 class="section-title">Community Partners</h2>
+            <p class="section-desc">Research partnerships supported by the HUMAN Grant.</p>
+
+            <div class="projects-list">
+              <a href="https://www.lakeforest.edu/academics/human-grant/chicago-history-museum" class="project-item" target="_blank">
+                <div class="project-icon">CHM</div>
+                <div class="project-content">
+                  <h4>Chicago History Museum</h4>
+                  <p>Developing ChiBot, a generative AI tool using CHM's collections to map Chicago's diverse communities.</p>
+                </div>
+                <span class="project-arrow">&rarr;</span>
+              </a>
+
+              <a href="https://www.lakeforest.edu/academics/human-grant/sweet-water-foundation" class="project-item" target="_blank">
+                <div class="project-icon">SWF</div>
+                <div class="project-content">
+                  <h4>Sweet Water Foundation</h4>
+                  <p>Exploring ethical AI in urban ecology through courses, internships, and exhibitions.</p>
+                </div>
+                <span class="project-arrow">&rarr;</span>
+              </a>
+
+              <a href="https://www.lakeforest.edu/academics/human-grant/ragdale" class="project-item" target="_blank">
+                <div class="project-icon">RAG</div>
+                <div class="project-content">
+                  <h4>Ragdale</h4>
+                  <p>The HUMAN Residency: a multi-year program for artists exploring AI, humanities, and social justice.</p>
+                </div>
+                <span class="project-arrow">&rarr;</span>
+              </a>
+            </div>
+
+            <h3 class="section-title" style="margin-top: 2.5rem;">Podcasts & Media</h3>
+            <div class="podcasts-grid">
+              <a href="https://open.spotify.com/show/4aRP2XSavdtrLG5FZoonOK" class="podcast-card" target="_blank">
+                <img src="how.png" alt="HOW I AI">
+                <div class="podcast-overlay">
+                  <h4>HOW I AI</h4>
+                  <p>Claire Vo</p>
+                </div>
+                <div class="podcast-play">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </a>
+
+              <a href="https://podcasts.apple.com/pe/podcast/everyday-ai-podcast-an-ai-and-chatgpt-podcast/id1683401861" class="podcast-card" target="_blank">
+                <img src="everyday.png" alt="Everyday AI">
+                <div class="podcast-overlay">
+                  <h4>Everyday AI</h4>
+                  <p>Jordan Wilson</p>
+                </div>
+                <div class="podcast-play">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </a>
+
+              <a href="https://www.youtube.com/watch?v=5MWT_doo68k" class="podcast-card" target="_blank">
+                <img src="altman.png" alt="Sam Altman TEDx">
+                <div class="podcast-overlay">
+                  <h4>Sam Altman on ChatGPT</h4>
+                  <p>TEDx</p>
+                </div>
+                <div class="podcast-play">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </a>
+
+              <a href="https://blogs.nvidia.com/ai-podcast/" class="podcast-card" target="_blank">
+                <img src="nvidia.png" alt="NVIDIA AI Podcast">
+                <div class="podcast-overlay">
+                  <h4>NVIDIA AI Podcast</h4>
+                  <p>NVIDIA</p>
+                </div>
+                <div class="podcast-play">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Lake Forest College" class="footer-logo">
+        <p class="footer-tagline">Exploring AI through the humanities with emphasis on equity and justice.</p>
+      </div>
+      <div class="footer-content">
+        <div class="footer-col">
+          <h5>Archive</h5>
+          <a href="fellows.html">All Fellows</a>
+          <a href="fellows.html#2026">2026-27 Cohort</a>
+          <a href="fellows.html#2025">2025-26 Cohort</a>
+          <a href="fellows.html#2024">2024-25 Cohort</a>
+        </div>
+        <div class="footer-col">
+          <h5>Program</h5>
+          <a href="about.html">About HUMAN</a>
+          <a href="team.html">Team</a>
+          <a href="courses.html">Courses</a>
+          <a href="book-club.html">Book Club</a>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <a href="digest/index.html">HUMAN Digest</a>
+          <a href="https://www.lakeforest.edu/academics/centers/krebs" target="_blank">Krebs Center</a>
+          <a href="https://mellon.org/" target="_blank">Mellon Foundation</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2024-2026 Lake Forest College. HUMAN Initiative.</span>
+      <div class="footer-links">
+        <a href="https://www.lakeforest.edu" target="_blank">Lake Forest College</a>
+        <a href="mailto:human@lakeforest.edu">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Smooth scroll and animations -->
+  <script>
+    // Animate elements on scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.fellow-card, .digest-card, .read-item, .project-item, .podcast-card').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+      observer.observe(el);
+    });
+
+    // Filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        // Filter logic would go here
+      });
+    });
+  </script>
+
+  <!-- Splash Screen Script -->
+  <script>
+    (function() {
+      const splash = document.getElementById('splash');
+
+      // Check if splash was already shown this session
+      if (sessionStorage.getItem('splashShown')) {
+        splash.classList.add('hidden');
+        return;
+      }
+
+      // Show splash for 2.5 seconds, then fade out
+      setTimeout(function() {
+        splash.classList.add('hidden');
+        sessionStorage.setItem('splashShown', 'true');
+      }, 2500);
+    })();
+  </script>
+
+</body>
+</html>

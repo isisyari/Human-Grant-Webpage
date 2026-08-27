@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fellows Archive | HUMAN Initiative</title>
+  <style>
+    @font-face {
+      font-family: 'Room 205';
+      src: url('font/Room205-Regular.otf') format('opentype');
+    }
+
+    :root {
+      --paper: #FAF8F3;
+      --paper-dark: #F0EDE6;
+      --red: #B61F2A;
+      --charcoal: #1C1C1C;
+      --slate: #4A4A4A;
+      --muted: #888;
+      --rule: rgba(28, 28, 28, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Crimson Pro', Georgia, serif;
+      background: var(--paper);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-size: 18px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-brand { display: flex; align-items: center; gap: 1rem; }
+    .header-logo { height: 40px; }
+    .header-title { font-family: 'Room 205', Georgia, serif; font-size: 1.1rem; }
+    .header-title span { color: var(--red); }
+
+    nav { display: flex; gap: 2.5rem; }
+    nav a { font-family: -apple-system, sans-serif; font-size: 0.85rem; color: var(--slate); }
+    nav a:hover { color: var(--charcoal); }
+    nav a.active { color: var(--charcoal); }
+
+    main { max-width: 1400px; margin: 0 auto; padding: 8rem 3rem 4rem; }
+
+    .page-header {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .page-index { position: sticky; top: 100px; align-self: start; }
+    .page-number { font-family: 'Room 205', Georgia, serif; font-size: 4rem; color: var(--red); opacity: 0.15; line-height: 1; }
+    .page-label { font-family: 'SF Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.5rem; }
+
+    .page-content h1 { font-family: 'Room 205', Georgia, serif; font-size: 3rem; font-weight: normal; margin-bottom: 1rem; }
+    .page-content .lead { font-size: 1.15rem; color: var(--slate); max-width: 600px; margin-bottom: 1.5rem; }
+
+    /* Filter */
+    .filter-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid var(--rule);
+      color: var(--slate);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--charcoal);
+      border-color: var(--charcoal);
+      color: var(--paper);
+    }
+
+    /* Cohort Section */
+    .cohort-section {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .cohort-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .cohort-year {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.5rem;
+    }
+
+    .cohort-count {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Fellows Table */
+    .fellows-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .fellows-table tr {
+      border-bottom: 1px solid var(--rule);
+      transition: background 0.2s;
+    }
+
+    .fellows-table tr:hover {
+      background: rgba(182, 31, 42, 0.02);
+    }
+
+    .fellows-table td {
+      padding: 1.25rem 1rem;
+      vertical-align: top;
+    }
+
+    .fellows-table td:first-child {
+      width: 100px;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      color: var(--red);
+    }
+
+    .fellows-table td:nth-child(2) {
+      width: 180px;
+    }
+
+    .fellow-name {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.1rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .fellow-dept {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .fellow-project {
+      font-style: italic;
+      color: var(--slate);
+    }
+
+    .fellow-link {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color 0.2s;
+    }
+
+    .fellow-link:hover {
+      color: var(--red);
+    }
+
+    /* Research Assistants */
+    .ra-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .ra-card {
+      padding: 1.25rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+    }
+
+    .ra-card h3 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1rem;
+      font-weight: normal;
+      margin-bottom: 0.25rem;
+    }
+
+    .ra-card .ra-year {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+    }
+
+    .ra-card p {
+      font-size: 0.8rem;
+      color: var(--slate);
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    footer { background: var(--charcoal); color: var(--paper); margin-top: 4rem; }
+    .footer-inner { max-width: 1400px; margin: 0 auto; padding: 3rem; display: grid; grid-template-columns: 200px 1fr; gap: 4rem; }
+    .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+    .footer-logo { height: 120px; margin-left: 30px; width: 120px; }
+    .footer-tagline { font-size: 0.85rem; opacity: 0.6; }
+    .footer-content { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+    .footer-col h5 { font-family: 'SF Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .footer-col a { display: block; font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { max-width: 1400px; margin: 0 auto; padding: 1.5rem 3rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; }
+    .footer-copy { font-size: 0.8rem; opacity: 0.5; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 0.8rem; opacity: 0.5; }
+
+    @media (max-width: 1100px) {
+      .page-header, .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .ra-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      main { padding: 6rem 1.5rem 2rem; }
+      nav { display: none; }
+      .fellows-table td:first-child { display: none; }
+      .ra-grid { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="header-brand">
+        <img src="logo.png" alt="Lake Forest College" class="header-logo">
+        <span class="header-title"><span>HUMAN</span> Initiative</span>
+      </a>
+      <nav>
+        <a href="fellows.html" class="active">Fellows</a>
+        <a href="about.html">About</a>
+        <a href="team.html">Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="book-club.html">Book Club</a>
+        <a href="digest/index.html">Digest</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <div class="page-index">
+        <div class="page-number">A</div>
+        <div class="page-label">Archive</div>
+      </div>
+      <div class="page-content">
+        <h1>Fellows Archive</h1>
+        <p class="lead">Complete catalogue of HUMAN Fellows exploring AI through humanistic practice since 2024.</p>
+        <div class="filter-bar">
+          <button class="filter-btn active">All Cohorts</button>
+          <button class="filter-btn">2026-27</button>
+          <button class="filter-btn">2025-26</button>
+          <button class="filter-btn">2024-25</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2026-27 Cohort -->
+    <section class="cohort-section" id="2026">
+      <div class="cohort-header">
+        <h2 class="cohort-year">2026-27</h2>
+        <span class="cohort-count">7 Fellows</span>
+      </div>
+      <table class="fellows-table">
+        <tr>
+          <td>HUMAN.26.01</td>
+          <td>
+            <div class="fellow-name">Anya Golovkova</div>
+            <div class="fellow-dept">Religion</div>
+          </td>
+          <td class="fellow-project">Vibe Philology: Translation of the Glory of the Goddess</td>
+          <td><a href="fellow-golovkova.html" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.26.02</td>
+          <td>
+            <div class="fellow-name">Josh Corey</div>
+            <div class="fellow-dept">English</div>
+          </td>
+          <td class="fellow-project">Speculative Fiction in the Age of Artificial Intimacy</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.26.03</td>
+          <td>
+            <div class="fellow-name">Paul Henne</div>
+            <div class="fellow-dept">Philosophy</div>
+          </td>
+          <td class="fellow-project">How Ordinary People Think About Artificial Intelligence</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.26.04</td>
+          <td>
+            <div class="fellow-name">Justin Kee</div>
+            <div class="fellow-dept">Politics & Philosophy</div>
+          </td>
+          <td class="fellow-project">Four Souls in the Machine</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.26.05</td>
+          <td>
+            <div class="fellow-name">Don Meyer</div>
+            <div class="fellow-dept">Music</div>
+          </td>
+          <td class="fellow-project">American Dark Ages: Further Explorations into Generative AI</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.26.06</td>
+          <td>
+            <div class="fellow-name">Mel Rovner</div>
+            <div class="fellow-dept">Art</div>
+          </td>
+          <td class="fellow-project">Critical Analysis of Architectural History Pedagogy</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.26.07</td>
+          <td>
+            <div class="fellow-name">Dan Schwartz</div>
+            <div class="fellow-dept">Music</div>
+          </td>
+          <td class="fellow-project">Generating the "Global Sound": Cultural Appropriation and AI Music</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- 2025-26 Cohort -->
+    <section class="cohort-section" id="2025">
+      <div class="cohort-header">
+        <h2 class="cohort-year">2025-26</h2>
+        <span class="cohort-count">6 Fellows</span>
+      </div>
+      <table class="fellows-table">
+        <tr>
+          <td>HUMAN.25.01</td>
+          <td>
+            <div class="fellow-name">Susy Bielak</div>
+            <div class="fellow-dept">Studio Art</div>
+          </td>
+          <td class="fellow-project">Speculative Nationality Rooms</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.25.02</td>
+          <td>
+            <div class="fellow-name">Josh Corey</div>
+            <div class="fellow-dept">English</div>
+          </td>
+          <td class="fellow-project">Lake Forest College Press: AI Editions</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.25.03</td>
+          <td>
+            <div class="fellow-name">Kimiko Matsumura</div>
+            <div class="fellow-dept">Art History</div>
+          </td>
+          <td class="fellow-project">Seeing Through AI: Computer Vision and Art Connoisseurship</td>
+          <td><a href="https://seeing-through-ai.framer.website/" class="fellow-link" target="_blank">Website &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.25.04</td>
+          <td>
+            <div class="fellow-name">Don Meyer</div>
+            <div class="fellow-dept">Music</div>
+          </td>
+          <td class="fellow-project">American Dark Ages: Exploring Generative AI in Multi-Media</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.25.05</td>
+          <td>
+            <div class="fellow-name">Mel Rovner</div>
+            <div class="fellow-dept">Art</div>
+          </td>
+          <td class="fellow-project">Semiotics of Space: AI Readings of Lake Forest's Built Environment</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.25.06</td>
+          <td>
+            <div class="fellow-name">Tracy Taylor</div>
+            <div class="fellow-dept">Digital Art</div>
+          </td>
+          <td class="fellow-project">Ars Machina Vitae: A Reproductive Odyssey</td>
+          <td><a href="https://www.tracymarietaylor.com/#/artificial-1/" class="fellow-link" target="_blank">Website &rarr;</a></td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- 2024-25 Cohort -->
+    <section class="cohort-section" id="2024">
+      <div class="cohort-header">
+        <h2 class="cohort-year">2024-25</h2>
+        <span class="cohort-count">6 Fellows</span>
+      </div>
+      <table class="fellows-table">
+        <tr>
+          <td>HUMAN.24.01</td>
+          <td>
+            <div class="fellow-name">Josh Corey</div>
+            <div class="fellow-dept">English</div>
+          </td>
+          <td class="fellow-project">Lake Forest College Press AI Editions</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.24.02</td>
+          <td>
+            <div class="fellow-name">Mel Rovner</div>
+            <div class="fellow-dept">Art</div>
+          </td>
+          <td class="fellow-project">Anti-Monumental: AI and Chicago's Public History</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.24.03</td>
+          <td>
+            <div class="fellow-name">David Sanchez-Burr</div>
+            <div class="fellow-dept">Art</div>
+          </td>
+          <td class="fellow-project">The Passage is Ours to Alight: New Sentience</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.24.04</td>
+          <td>
+            <div class="fellow-name">Dan Schwartz</div>
+            <div class="fellow-dept">Music</div>
+          </td>
+          <td class="fellow-project">Generative AI and the Future of Fine Arts</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.24.05</td>
+          <td>
+            <div class="fellow-name">Tracy Taylor</div>
+            <div class="fellow-dept">Digital Art</div>
+          </td>
+          <td class="fellow-project">Ars Machina Vitae: A Reproductive Odyssey</td>
+          <td><a href="https://www.tracymarietaylor.com/#/artificial-1/" class="fellow-link" target="_blank">Website &rarr;</a></td>
+        </tr>
+        <tr>
+          <td>HUMAN.24.06</td>
+          <td>
+            <div class="fellow-name">Rachel Whidden</div>
+            <div class="fellow-dept">Communication</div>
+          </td>
+          <td class="fellow-project">Visualizing Rhetoric in AI Bias</td>
+          <td><a href="#" class="fellow-link">View &rarr;</a></td>
+        </tr>
+      </table>
+    </section>
+
+    <!-- Research Assistants -->
+    <section class="cohort-section" id="research-assistants">
+      <div class="cohort-header">
+        <h2 class="cohort-year">Research Assistants</h2>
+        <span class="cohort-count">Undergraduate Researchers</span>
+      </div>
+      <div class="ra-grid">
+        <div class="ra-card">
+          <h3>Peter Aupperlee</h3>
+          <div class="ra-year">Junior</div>
+          <p>English Literature major, minoring in Studio Art and Asian Studies. Passionate about the intersection of literature, arts, and technology.</p>
+        </div>
+        <div class="ra-card">
+          <h3>Sebastian M. Buzo</h3>
+          <div class="ra-year">Junior</div>
+          <p>Computer Science major from Costa Rica. Focuses on AI implementation, drawing on programming and technology expertise.</p>
+        </div>
+        <div class="ra-card">
+          <h3>Niki Datangel</h3>
+          <div class="ra-year">Senior</div>
+          <p>Politics major from Seattle with minors in Asian Studies and Legal Studies. Explores law, policy, and technology intersections.</p>
+        </div>
+        <div class="ra-card">
+          <h3>Grayson Goan</h3>
+          <div class="ra-year">First-Year</div>
+          <p>Art History major from Kentucky with minors in Studio Art and Museum Studies. Interested in Art History and AI research.</p>
+        </div>
+        <div class="ra-card">
+          <h3>Brodie Kaufman</h3>
+          <div class="ra-year">Class of 2026</div>
+          <p>French and Sociology & Anthropology double-major. Researches how emerging AI technologies impact the humanities.</p>
+        </div>
+        <div class="ra-card">
+          <h3>Ari Kazantceva</h3>
+          <div class="ra-year">Senior</div>
+          <p>Studio Art and Computer Science major from Russia. Explores intersections of art and AI, examining ethical engagement.</p>
+        </div>
+        <div class="ra-card">
+          <h3>Madeline Mann</h3>
+          <div class="ra-year">Sophomore</div>
+          <p>Music major and Cinema Studies minor from Sacramento. Explores technology's connection to music and media creation.</p>
+        </div>
+        <div class="ra-card">
+          <h3>Kyle Moyo</h3>
+          <div class="ra-year">Sophomore</div>
+          <p>Data Science major from Zimbabwe. Focuses on human-centered technology, information architecture, and humanistic data.</p>
+        </div>
+        <div class="ra-card">
+          <h3>Gloria Nakafu</h3>
+          <div class="ra-year">Junior</div>
+          <p>Art History and French major from Uganda. Advocates for marginalized voices within humanities disciplines.</p>
+        </div>
+        <div class="ra-card">
+          <h3>Sammie Ross</h3>
+          <div class="ra-year">Student</div>
+          <p>English major on Writing track with double minor in Educational Studies and AI Ethics. Writing Center tutor and theatre member.</p>
+        </div>
+        <div class="ra-card">
+          <h3>Isis Correa Tume</h3>
+          <div class="ra-year">Sophomore</div>
+          <p>Economics and Computer Science major from Peru with IR minor. Focuses on machine learning and AI model training.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Lake Forest College" class="footer-logo">
+        <p class="footer-tagline">Exploring AI through the humanities with emphasis on equity and justice.</p>
+      </div>
+      <div class="footer-content">
+        <div class="footer-col">
+          <h5>Archive</h5>
+          <a href="fellows.html">All Fellows</a>
+          <a href="fellows.html#2026">2026-27 Cohort</a>
+          <a href="fellows.html#2025">2025-26 Cohort</a>
+          <a href="fellows.html#2024">2024-25 Cohort</a>
+        </div>
+        <div class="footer-col">
+          <h5>Program</h5>
+          <a href="about.html">About HUMAN</a>
+          <a href="team.html">Team</a>
+          <a href="courses.html">Courses</a>
+          <a href="book-club.html">Book Club</a>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <a href="digest/index.html">HUMAN Digest</a>
+          <a href="https://www.lakeforest.edu/academics/centers/krebs" target="_blank">Krebs Center</a>
+          <a href="https://mellon.org/" target="_blank">Mellon Foundation</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2024-2026 Lake Forest College. HUMAN Initiative.</span>
+      <div class="footer-links">
+        <a href="https://www.lakeforest.edu" target="_blank">Lake Forest College</a>
+        <a href="mailto:human@lakeforest.edu">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Filter functionality
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

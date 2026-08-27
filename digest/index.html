@@ -3,187 +3,545 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Human Digest | LakeForest.AI</title>
-  <link rel="stylesheet" href="digest.css">
+  <title>HUMAN Digest | HUMAN Initiative</title>
   <style>
+    @font-face {
+      font-family: 'Room 205';
+      src: url('../font/Room205-Regular.otf') format('opentype');
+    }
+
+    :root {
+      --paper: #FAF8F3;
+      --paper-dark: #F0EDE6;
+      --red: #B61F2A;
+      --charcoal: #1C1C1C;
+      --slate: #4A4A4A;
+      --muted: #888;
+      --rule: rgba(28, 28, 28, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Crimson Pro', Georgia, serif;
+      background: var(--paper);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-size: 18px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-brand { display: flex; align-items: center; gap: 1rem; }
+    .header-logo { height: 40px; }
+    .header-title { font-family: 'Room 205', Georgia, serif; font-size: 1.1rem; }
+    .header-title span { color: var(--red); }
+
+    nav { display: flex; gap: 2.5rem; }
+    nav a { font-family: -apple-system, sans-serif; font-size: 0.85rem; color: var(--slate); transition: color 0.2s; }
+    nav a:hover { color: var(--charcoal); }
+    nav a.active { color: var(--charcoal); }
+
+    /* Main */
+    main { max-width: 1400px; margin: 0 auto; padding: 8rem 3rem 4rem; }
+
+    .page-header {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+      margin-bottom: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .page-index { position: sticky; top: 100px; align-self: start; }
+    .page-number { font-family: 'Room 205', Georgia, serif; font-size: 4rem; color: var(--red); opacity: 0.15; line-height: 1; }
+    .page-label { font-family: 'SF Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.5rem; }
+
+    .page-content h1 { font-family: 'Room 205', Georgia, serif; font-size: 3rem; font-weight: normal; margin-bottom: 1rem; }
+    .page-content .lead { font-size: 1.15rem; color: var(--slate); max-width: 600px; margin-bottom: 1.5rem; }
+    .page-content .meta { font-family: 'SF Mono', monospace; font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--red); }
+
+    /* Blinking Cursor */
+    .cursor {
+      display: inline-block;
+      width: 3px;
+      height: 0.9em;
+      background: var(--red);
+      margin-left: 4px;
+      vertical-align: middle;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    /* Staggered Fade-in */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Digest Grid */
     .digest-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       margin-top: 2rem;
     }
+
     .digest-card {
-      background: white;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: var(--card-shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-decoration: none;
-      color: inherit;
-    }
-    .digest-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-    }
-    .digest-card-header {
-      padding: 2rem;
-      color: white;
       position: relative;
+      background: #fff;
+      border: 1px solid var(--rule);
+      transition: all 0.3s ease;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeInUp 0.6s ease forwards;
     }
-    .digest-card-header.news { background: linear-gradient(135deg, #b61f2a, #d42d3a); }
-    .digest-card-header.higher-ed { background: linear-gradient(135deg, #1a4a6e, #2d7ab8); }
-    .digest-card-header.person { background: linear-gradient(135deg, #f28c28, #e5a44d); }
-    .digest-card-header.terms { background: linear-gradient(135deg, #2d5a27, #4a8c42); }
-    .digest-card-header.fun { background: linear-gradient(135deg, #6a1b9a, #9c4dcc); }
-    .digest-card-header h2 {
-      font-family: 'Room 205', serif;
-      margin: 0;
-      font-size: 1.5rem;
+
+    .digest-card:nth-child(1) { animation-delay: 0.1s; }
+    .digest-card:nth-child(2) { animation-delay: 0.2s; }
+    .digest-card:nth-child(3) { animation-delay: 0.3s; }
+    .digest-card:nth-child(4) { animation-delay: 0.4s; }
+    .digest-card:nth-child(5) { animation-delay: 0.5s; }
+
+    .digest-card:hover {
+      border-color: var(--charcoal);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
     }
-    .digest-card-header .icon {
-      font-size: 3rem;
+
+    .digest-card::before {
+      content: '';
       position: absolute;
-      right: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      opacity: 0.3;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--red);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s ease;
     }
+
+    .digest-card:hover::before {
+      transform: scaleY(1);
+    }
+
+    .digest-card-header {
+      padding: 2rem 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .digest-card-number {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 2.5rem;
+      color: var(--red);
+      opacity: 0.12;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .digest-card-tag {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+
     .digest-card-body {
       padding: 1.5rem;
     }
+
+    .digest-card-body h2 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: normal;
+      margin-bottom: 0.75rem;
+    }
+
     .digest-card-body p {
-      margin: 0;
-      color: #666;
-      line-height: 1.6;
+      font-size: 0.9rem;
+      color: var(--slate);
+      line-height: 1.5;
+      margin-bottom: 1rem;
     }
-    .digest-card-footer {
-      padding: 1rem 1.5rem;
-      border-top: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
+
+    .digest-card-link {
+      display: inline-flex;
       align-items: center;
+      gap: 0.5rem;
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      transition: color 0.2s;
     }
-    .read-more {
-      color: var(--primary-red);
-      font-weight: 600;
+
+    .digest-card-link:hover {
+      color: var(--red);
     }
-    .tag {
-      background: var(--light-gray);
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.8rem;
+
+    .digest-card-link svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.2s;
+    }
+
+    .digest-card:hover .digest-card-link svg {
+      transform: translateX(4px);
+    }
+
+    /* Hero Image */
+    .hero-image {
+      width: 100%;
+      height: auto;
+      margin-top: 2rem;
+      filter: grayscale(20%);
+    }
+
+    .hero-caption {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      text-align: right;
+    }
+
+    /* Partners Section */
+    .partners-section {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+      padding: 3rem 0;
+      border-top: 1px solid var(--rule);
+      margin-top: 3rem;
+    }
+
+    .partners-grid {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 3rem;
+    }
+
+    .partner-logo {
+      height: 50px;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+      filter: grayscale(100%);
+    }
+
+    .partner-logo:hover {
+      opacity: 1;
+      filter: grayscale(0%);
+    }
+
+    .partner-logo.mellon {
+      height: 40px;
+    }
+
+    /* About Section */
+    .about-section {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+      padding: 3rem 0;
+      border-top: 1px solid var(--rule);
+      margin-top: 3rem;
+    }
+
+    .section-number {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 2rem;
+      color: var(--red);
+      opacity: 0.12;
+    }
+
+    .section-label {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .about-content h2 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: normal;
+      margin-bottom: 1rem;
+    }
+
+    .about-content p {
+      color: var(--slate);
+      max-width: 600px;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-content a {
+      color: var(--red);
+      border-bottom: 1px solid var(--red);
+    }
+
+    /* Footer */
+    footer { background: var(--charcoal); color: var(--paper); margin-top: 4rem; }
+    .footer-inner { max-width: 1400px; margin: 0 auto; padding: 3rem; display: grid; grid-template-columns: 200px 1fr; gap: 4rem; }
+    .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+    .footer-logo { height: 120px; margin-left: 30px; width: 120px; }
+    .footer-tagline { font-size: 0.85rem; opacity: 0.6; }
+    .footer-content { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+    .footer-col h5 { font-family: 'SF Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1rem; }
+    .footer-col a { display: block; font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { max-width: 1400px; margin: 0 auto; padding: 1.5rem 3rem; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; }
+    .footer-copy { font-size: 0.8rem; opacity: 0.5; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 0.8rem; opacity: 0.5; }
+
+    @media (max-width: 1100px) {
+      .page-header, .about-section, .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .digest-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      main { padding: 6rem 1.5rem 2rem; }
+      nav { display: none; }
+      .digest-grid { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: 1fr; }
     }
   </style>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-  <header class="digest-header">
+
+  <header>
     <div class="header-inner">
-      <a href="../home.html">
-        <img src="../logo.png" alt="LakeForest.AI" class="header-logo">
+      <a href="../index.html" class="header-brand">
+        <img src="../logo.png" alt="Lake Forest College" class="header-logo">
+        <span class="header-title"><span>HUMAN</span> Initiative</span>
       </a>
-      <a href="../home.html" class="back-link">
-        <span>&larr;</span> Back to Home
-      </a>
+      <nav>
+        <a href="../index.html#fellows">Fellows</a>
+        <a href="../about.html">About</a>
+        <a href="../team.html">Team</a>
+        <a href="../courses.html">Courses</a>
+        <a href="../book-club.html">Book Club</a>
+        <a href="index.html" class="active">Digest</a>
+      </nav>
     </div>
   </header>
 
-  <section class="digest-hero">
-    <h1>Human Digest</h1>
-    <p class="subtitle">Your curated guide to AI news, research, and resources from the Krebs Center</p>
-    <p class="date">March 2026 Edition</p>
-  </section>
-
-  <main class="digest-content" style="max-width: 1100px;">
-    <article class="article-card">
-      <h2>Welcome to Human Digest</h2>
-      <p>Human Digest is an initiative by the Krebs Center to release weekly research on AI-related news, bringing together the latest developments in artificial intelligence with a focus on the humanities, ethics, and education.</p>
-      <p>Explore our curated sections below:</p>
-    </article>
+  <main>
+    <div class="page-header">
+      <div class="page-index">
+        <div class="page-number">D</div>
+        <div class="page-label">Digest</div>
+      </div>
+      <div class="page-content">
+        <h1>HUMAN Digest<span class="cursor"></span></h1>
+        <p class="lead">Weekly research on AI-related news from the Krebs Center. Your curated guide to artificial intelligence, ethics, and the humanities.</p>
+        <span class="meta">March 2026 Edition</span>
+        <img src="../research_ass.png" alt="HUMAN Research Assistants" class="hero-image">
+        <p class="hero-caption">HUMAN Research Assistants, Lake Forest College</p>
+      </div>
+    </div>
 
     <div class="digest-grid">
       <a href="general-news.html" class="digest-card">
-        <div class="digest-card-header news">
-          <h2>AI General News</h2>
-          <span class="icon">&#128240;</span>
+        <div class="digest-card-header">
+          <div class="digest-card-number">01</div>
+          <span class="digest-card-tag">News</span>
         </div>
         <div class="digest-card-body">
+          <h2>AI General News</h2>
           <p>The latest developments in AI from around the world, including industry news, policy updates, and breakthrough announcements.</p>
-        </div>
-        <div class="digest-card-footer">
-          <span class="read-more">Read articles &rarr;</span>
-          <span class="tag">5 articles</span>
+          <span class="digest-card-link">
+            Read articles
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
         </div>
       </a>
 
       <a href="higher-ed.html" class="digest-card">
-        <div class="digest-card-header higher-ed">
-          <h2>AI in Higher Ed</h2>
-          <span class="icon">&#127891;</span>
+        <div class="digest-card-header">
+          <div class="digest-card-number">02</div>
+          <span class="digest-card-tag">Research</span>
         </div>
         <div class="digest-card-body">
+          <h2>AI in Higher Ed</h2>
           <p>Academic research and scholarly perspectives on artificial intelligence in education, featuring peer-reviewed papers and expert analysis.</p>
-        </div>
-        <div class="digest-card-footer">
-          <span class="read-more">Read research &rarr;</span>
-          <span class="tag">Peer-reviewed</span>
+          <span class="digest-card-link">
+            Read research
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
         </div>
       </a>
 
       <a href="someone-to-know.html" class="digest-card">
-        <div class="digest-card-header person">
-          <h2>Someone to Know</h2>
-          <span class="icon">&#128100;</span>
+        <div class="digest-card-header">
+          <div class="digest-card-number">03</div>
+          <span class="digest-card-tag">Profile</span>
         </div>
         <div class="digest-card-body">
+          <h2>Someone to Know</h2>
           <p>Profiles of influential voices shaping the conversation around AI and ethics, from researchers to philosophers to industry leaders.</p>
-        </div>
-        <div class="digest-card-footer">
-          <span class="read-more">Meet them &rarr;</span>
-          <span class="tag">Featured</span>
+          <span class="digest-card-link">
+            Meet them
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
         </div>
       </a>
 
       <a href="terminology.html" class="digest-card">
-        <div class="digest-card-header terms">
-          <h2>AI Terminology</h2>
-          <span class="icon">&#128218;</span>
+        <div class="digest-card-header">
+          <div class="digest-card-number">04</div>
+          <span class="digest-card-tag">Glossary</span>
         </div>
         <div class="digest-card-body">
+          <h2>AI Terminology</h2>
           <p>Essential terms and concepts for understanding artificial intelligence, from foundational concepts to cutting-edge terminology.</p>
-        </div>
-        <div class="digest-card-footer">
-          <span class="read-more">Learn terms &rarr;</span>
-          <span class="tag">Glossary</span>
+          <span class="digest-card-link">
+            Learn terms
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
         </div>
       </a>
 
       <a href="just-for-fun.html" class="digest-card">
-        <div class="digest-card-header fun">
-          <h2>Just for Fun</h2>
-          <span class="icon">&#127918;</span>
+        <div class="digest-card-header">
+          <div class="digest-card-number">05</div>
+          <span class="digest-card-tag">Interactive</span>
         </div>
         <div class="digest-card-body">
+          <h2>Just for Fun</h2>
           <p>Interactive AI experiments, games, and creative tools that make learning about artificial intelligence enjoyable and accessible.</p>
-        </div>
-        <div class="digest-card-footer">
-          <span class="read-more">Explore &rarr;</span>
-          <span class="tag">Interactive</span>
+          <span class="digest-card-link">
+            Explore
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </span>
         </div>
       </a>
     </div>
 
-    <article class="article-card" style="margin-top: 3rem;">
-      <h2>About the Krebs Center</h2>
-      <p>The Krebs Center at Lake Forest College supports interdisciplinary research and teaching at the intersection of technology, humanities, and social sciences. Through initiatives like Human Digest, we aim to make AI knowledge accessible to everyone.</p>
-      <ul class="resource-list">
-        <li><a href="https://www.lakeforest.edu/academics/human-grant" target="_blank">Learn more about the HUMAN Grant</a></li>
-      </ul>
-    </article>
+    <section class="partners-section">
+      <div class="page-index">
+        <div class="section-number">06</div>
+        <div class="section-label">Partners</div>
+      </div>
+      <div class="partners-content">
+        <h2>Community Partners</h2>
+        <div class="partners-grid">
+          <a href="https://mellon.org/" target="_blank"><img src="../mellon.png" alt="Mellon Foundation" class="partner-logo mellon"></a>
+          <a href="https://www.sweetwaterfoundation.com/" target="_blank"><img src="../sweet_water.png" alt="Sweet Water Foundation" class="partner-logo"></a>
+          <a href="https://ragdale.org/" target="_blank"><img src="../ragdale.png" alt="Ragdale" class="partner-logo"></a>
+          <a href="https://www.chicagohistory.org/" target="_blank"><img src="../chicago_hist.png" alt="Chicago History Museum" class="partner-logo"></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="page-index">
+        <div class="section-number">07</div>
+        <div class="section-label">About</div>
+      </div>
+      <div class="about-content">
+        <h2>About the Krebs Center</h2>
+        <p>The Krebs Center at Lake Forest College supports interdisciplinary research and teaching at the intersection of technology, humanities, and social sciences. Through initiatives like HUMAN Digest, we aim to make AI knowledge accessible to everyone.</p>
+        <p><a href="https://www.lakeforest.edu/academics/human-grant" target="_blank">Learn more about the HUMAN Grant &rarr;</a></p>
+      </div>
+    </section>
   </main>
 
-  <footer class="digest-footer">
-    <p>Human Digest is an initiative by the Krebs Center at Lake Forest College</p>
-    <p><a href="../home.html">Return to LakeForest.AI</a></p>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="../logo.png" alt="Lake Forest College" class="footer-logo">
+        <p class="footer-tagline">Exploring AI through the humanities with emphasis on equity and justice.</p>
+      </div>
+      <div class="footer-content">
+        <div class="footer-col">
+          <h5>Digest</h5>
+          <a href="general-news.html">AI General News</a>
+          <a href="higher-ed.html">AI in Higher Ed</a>
+          <a href="someone-to-know.html">Someone to Know</a>
+          <a href="terminology.html">AI Terminology</a>
+          <a href="just-for-fun.html">Just for Fun</a>
+        </div>
+        <div class="footer-col">
+          <h5>Program</h5>
+          <a href="../about.html">About HUMAN</a>
+          <a href="../team.html">Team</a>
+          <a href="../courses.html">Courses</a>
+          <a href="../book-club.html">Book Club</a>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <a href="../fellows.html">Fellows Archive</a>
+          <a href="https://www.lakeforest.edu/academics/centers/krebs" target="_blank">Krebs Center</a>
+          <a href="https://mellon.org/" target="_blank">Mellon Foundation</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2024-2026 Lake Forest College. HUMAN Initiative.</span>
+      <div class="footer-links">
+        <a href="https://www.lakeforest.edu" target="_blank">Lake Forest College</a>
+        <a href="mailto:human@lakeforest.edu">Contact</a>
+      </div>
+    </div>
   </footer>
+
 </body>
 </html>

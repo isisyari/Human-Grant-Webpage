@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team | HUMAN Initiative</title>
+  <style>
+    @font-face {
+      font-family: 'Room 205';
+      src: url('font/Room205-Regular.otf') format('opentype');
+    }
+
+    :root {
+      --paper: #FAF8F3;
+      --paper-dark: #F0EDE6;
+      --red: #B61F2A;
+      --charcoal: #1C1C1C;
+      --slate: #4A4A4A;
+      --muted: #888;
+      --rule: rgba(28, 28, 28, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Crimson Pro', Georgia, serif;
+      background: var(--paper);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-size: 18px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-logo { height: 40px; }
+
+    .header-title {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.1rem;
+    }
+
+    .header-title span { color: var(--red); }
+
+    nav { display: flex; gap: 2.5rem; }
+
+    nav a {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 0.85rem;
+      color: var(--slate);
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--charcoal); }
+    nav a.active { color: var(--charcoal); }
+
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 8rem 3rem 4rem;
+    }
+
+    .page-header {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+      margin-bottom: 4rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .page-index { position: sticky; top: 100px; align-self: start; }
+
+    .page-number {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 4rem;
+      color: var(--red);
+      opacity: 0.15;
+      line-height: 1;
+    }
+
+    .page-label {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+
+    .page-content h1 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 3rem;
+      font-weight: normal;
+      margin-bottom: 1.5rem;
+    }
+
+    .page-content .lead {
+      font-size: 1.25rem;
+      color: var(--slate);
+      max-width: 600px;
+    }
+
+    .content-section {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .section-number {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 2rem;
+      color: var(--red);
+      opacity: 0.12;
+    }
+
+    .section-label {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .section-content h2 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.75rem;
+      font-weight: normal;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Team Grid */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .team-card {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+      transition: all 0.2s;
+    }
+
+    .team-card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+
+    .team-photo {
+      width: 120px;
+      height: 120px;
+      background: var(--paper-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 2rem;
+      color: var(--red);
+      opacity: 0.3;
+    }
+
+    .team-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .team-info h3 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: normal;
+      margin-bottom: 0.25rem;
+    }
+
+    .team-role {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.75rem;
+    }
+
+    .team-info p {
+      font-size: 0.9rem;
+      color: var(--slate);
+      line-height: 1.5;
+    }
+
+    /* Steering Committee - Smaller cards */
+    .steering-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .steering-card {
+      padding: 1.25rem;
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-left: 3px solid var(--red);
+    }
+
+    .steering-card h3 {
+      font-family: 'Room 205', Georgia, serif;
+      font-size: 1rem;
+      font-weight: normal;
+      margin-bottom: 0.25rem;
+    }
+
+    .steering-card .team-role {
+      margin-bottom: 0;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--charcoal);
+      color: var(--paper);
+      margin-top: 4rem;
+    }
+
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 4rem;
+    }
+
+    .footer-brand { display: flex; flex-direction: column; gap: 1rem; }
+    .footer-logo { height: 120px; margin-left: 30px; width: 120px; }
+    .footer-tagline { font-size: 0.85rem; opacity: 0.6; }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3rem;
+    }
+
+    .footer-col h5 {
+      font-family: 'SF Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-col a:hover { color: #fff; }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem 3rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .footer-copy { font-size: 0.8rem; opacity: 0.5; }
+    .footer-links { display: flex; gap: 2rem; }
+    .footer-links a { font-size: 0.8rem; opacity: 0.5; }
+    .footer-links a:hover { opacity: 1; }
+
+    @media (max-width: 1100px) {
+      .page-header, .content-section, .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .team-grid { grid-template-columns: 1fr; }
+      .steering-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      main { padding: 6rem 1.5rem 2rem; }
+      nav { display: none; }
+      .team-card { grid-template-columns: 1fr; }
+      .team-photo { width: 100%; height: 200px; }
+      .steering-grid { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="header-brand">
+        <img src="logo.png" alt="Lake Forest College" class="header-logo">
+        <span class="header-title"><span>HUMAN</span> Initiative</span>
+      </a>
+      <nav>
+        <a href="index.html#fellows">Fellows</a>
+        <a href="about.html">About</a>
+        <a href="team.html" class="active">Team</a>
+        <a href="courses.html">Courses</a>
+        <a href="book-club.html">Book Club</a>
+        <a href="digest/index.html">Digest</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-header">
+      <div class="page-index">
+        <div class="page-number">02</div>
+        <div class="page-label">Team</div>
+      </div>
+      <div class="page-content">
+        <h1>HUMAN Team</h1>
+        <p class="lead">An interdisciplinary group of Lake Forest College faculty and staff ensuring the success of the grant's activities.</p>
+      </div>
+    </div>
+
+    <section class="content-section">
+      <div class="page-index">
+        <div class="section-number">2.1</div>
+        <div class="section-label">Leadership</div>
+      </div>
+      <div class="section-content">
+        <h2>Principal Investigators</h2>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-photo">RW</div>
+            <div class="team-info">
+              <h3>Rachel Whidden</h3>
+              <div class="team-role">HUMAN Principal Investigator & Project Director</div>
+              <p>Associate Professor of Communication. As Chair of the Academic Honesty Judicial Board, Rachel first began exploring the ethical dimensions of generative AI use in education, particularly regarding its impact on authorship and originality.</p>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-photo">BZ</div>
+            <div class="team-info">
+              <h3>Ben Zeller</h3>
+              <div class="team-role">HUMAN Principal Investigator & Project Director</div>
+              <p>Professor of Religion. His research focuses on the intersection of religion and science, including religion and technology. He teaches a class on Religion, SciFi, AI, and Non-Human, exploring questions of personhood, consciousness, and the supernatural within AI.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="page-index">
+        <div class="section-number">2.2</div>
+        <div class="section-label">Staff</div>
+      </div>
+      <div class="section-content">
+        <h2>Program Staff</h2>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-photo">TC</div>
+            <div class="team-info">
+              <h3>Tommy Crawford</h3>
+              <div class="team-role">HUMAN Book Club Convener & Steering Committee</div>
+              <p>Reference & Instruction Librarian at Donnelley and Lee Library. He serves as the AI library point person and has a longstanding interest in speculative fiction and how we explore attitudes about intelligence and embodiment through written word.</p>
+            </div>
+          </div>
+          <div class="team-card">
+            <div class="team-photo">AR</div>
+            <div class="team-info">
+              <h3>Amy Roby</h3>
+              <div class="team-role">HUMAN Grant Manager</div>
+              <p>Joined Lake Forest College in 2021 and manages the Krebs Center for the Humanities. Prior to academia, she built a career in corporate sales, marketing, and communications. An enthusiastic mosaicist in her free time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="page-index">
+        <div class="section-number">2.3</div>
+        <div class="section-label">Committee</div>
+      </div>
+      <div class="section-content">
+        <h2>Steering Committee</h2>
+        <div class="steering-grid">
+          <div class="steering-card">
+            <h3>Tommy Crawford</h3>
+            <div class="team-role">Reference & Instruction Librarian</div>
+          </div>
+          <div class="steering-card">
+            <h3>Daw-Nay Evans</h3>
+            <div class="team-role">Assoc. Professor of Philosophy & African American Studies</div>
+          </div>
+          <div class="steering-card">
+            <h3>Justin Kee</h3>
+            <div class="team-role">Instructor of Politics & Philosophy</div>
+          </div>
+          <div class="steering-card">
+            <h3>Brian McCammack</h3>
+            <div class="team-role">Assoc. Professor of Environmental Studies</div>
+          </div>
+          <div class="steering-card">
+            <h3>David Sanchez-Burr</h3>
+            <div class="team-role">Assoc. Professor of Art</div>
+          </div>
+          <div class="steering-card">
+            <h3>Tessa Sermet</h3>
+            <div class="team-role">Assoc. Professor of French</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section">
+      <div class="page-index">
+        <div class="section-number">2.4</div>
+        <div class="section-label">Former</div>
+      </div>
+      <div class="section-content">
+        <h2>Former Team Members</h2>
+        <div class="steering-grid">
+          <div class="steering-card">
+            <h3>Davis Schneiderman</h3>
+            <div class="team-role">Former HUMAN PI, Executive Director Krebs Center</div>
+          </div>
+          <div class="steering-card">
+            <h3>Kim Hazlett</h3>
+            <div class="team-role">Former Director of the Library</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="logo.png" alt="Lake Forest College" class="footer-logo">
+        <p class="footer-tagline">Exploring AI through the humanities with emphasis on equity and justice.</p>
+      </div>
+      <div class="footer-content">
+        <div class="footer-col">
+          <h5>Archive</h5>
+          <a href="fellows.html">All Fellows</a>
+          <a href="fellows.html#2026">2026-27 Cohort</a>
+          <a href="fellows.html#2025">2025-26 Cohort</a>
+          <a href="fellows.html#2024">2024-25 Cohort</a>
+        </div>
+        <div class="footer-col">
+          <h5>Program</h5>
+          <a href="about.html">About HUMAN</a>
+          <a href="team.html">Team</a>
+          <a href="courses.html">Courses</a>
+          <a href="book-club.html">Book Club</a>
+        </div>
+        <div class="footer-col">
+          <h5>Resources</h5>
+          <a href="digest/index.html">HUMAN Digest</a>
+          <a href="https://www.lakeforest.edu/academics/centers/krebs" target="_blank">Krebs Center</a>
+          <a href="https://mellon.org/" target="_blank">Mellon Foundation</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2024-2026 Lake Forest College. HUMAN Initiative.</span>
+      <div class="footer-links">
+        <a href="https://www.lakeforest.edu" target="_blank">Lake Forest College</a>
+        <a href="mailto:human@lakeforest.edu">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
