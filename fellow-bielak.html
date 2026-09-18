@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anya Golovkova | HUMAN Fellows</title>
+  <title>Susy Bielak | HUMAN Fellows</title>
   <style>
     /* ═══════════════════════════════════════════════════════════════
        THE CATALOGUE — Fellow Detail Page
@@ -598,6 +598,51 @@
         text-align: center;
       }
     }
+
+    /* ── Bielak page additions ─────────────────────────────────────── */
+    .fellow-main.single { grid-template-columns: 1fr; }
+
+    .hero-figure { margin-bottom: 2.5rem; background: var(--paper-dark); }
+    .hero-figure img { width: 100%; height: auto; display: block; }
+    .hero-figure figcaption { padding: 1rem 0 0; font-size: 0.85rem; color: var(--slate); line-height: 1.4; max-width: 75ch; }
+
+    .project-description.no-dropcap p:first-of-type::first-letter {
+      font-family: inherit; font-size: inherit; float: none; padding: 0; color: inherit;
+    }
+
+    .statement-label {
+      font-family: 'SF Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 1.5rem;
+    }
+
+    .inline-figure { margin: 0 0 2.5rem; background: var(--paper-dark); }
+    .inline-figure img { width: 100%; height: auto; display: block; }
+    .inline-figure figcaption { padding: 1rem; font-size: 0.85rem; color: var(--slate); line-height: 1.4; }
+
+    .student-quote {
+      margin: 0 0 2.5rem; padding: 2rem 2.5rem;
+      border-left: 3px solid var(--red); background: #fff;
+      max-width: 70ch;
+    }
+    .student-quote .quote-label {
+      font-family: 'SF Mono', monospace; font-size: 0.65rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--red); margin-bottom: 1rem;
+    }
+    .student-quote p {
+      font-family: 'Room 205', Georgia, serif; font-size: 1.25rem; line-height: 1.55;
+      color: var(--charcoal); margin-bottom: 1.25rem;
+    }
+    .student-quote cite {
+      display: block; font-style: normal; font-size: 0.9rem; color: var(--slate);
+    }
+    .student-quote cite strong { font-weight: 500; color: var(--charcoal); }
+
+    .meta-item p + p { margin-top: 0.4rem; }
+
+    @media (max-width: 768px) {
+      .student-quote { padding: 1.5rem; }
+      .student-quote p { font-size: 1.1rem; }
+    }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -625,7 +670,7 @@
 
   <!-- Main Content -->
   <main>
-    <a href="index.html#fellows" class="back-link">
+    <a href="fellows.html#2025" class="back-link">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <path d="M19 12H5M12 19l-7-7 7-7"/>
       </svg>
@@ -634,83 +679,111 @@
 
     <article class="fellow-header">
       <div class="fellow-index animate-in">
-        <div class="fellow-catalogue">26.01</div>
-        <div class="fellow-year">2026-27 Cohort</div>
+        <div class="fellow-catalogue">25.01</div>
+        <div class="fellow-year">2025-26 Cohort</div>
       </div>
 
-      <div class="fellow-main">
-        <figure class="fellow-portrait animate-in delay-1">
-          <img src="fellows/golovkova.jpg" alt="Anya Golovkova">
-          <figcaption>Lake Forest College</figcaption>
-        </figure>
+      <div class="fellow-main single">
+        <div class="fellow-info animate-in delay-1">
+          <h1>Susy Bielak</h1>
+          <p class="fellow-title">HUMAN Fellow &middot; Studio Art</p>
+          <p class="fellow-affiliation">Lake Forest College &middot; <a href="https://www.susybielak.com/" target="_blank" rel="noopener">susybielak.com</a></p>
 
-        <div class="fellow-info animate-in delay-2">
-          <h1>Anya Golovkova</h1>
-          <p class="fellow-title">HUMAN Fellow</p>
-          <p class="fellow-affiliation">Lake Forest College</p>
+          <h2 class="fellow-project-title">Speculative Nationality Rooms &amp; Pattern Atlas</h2>
 
-          <h2 class="fellow-project-title">Vibe Philology: Translation of the Glory of the Goddess</h2>
+          <!-- 1. Installation overview -->
+          <figure class="hero-figure animate-in delay-2">
+            <img src="fellows/bielak-installation-1.jpg" alt="Installation view of I Am Made to Leave / I Am Made to Return at Hillman Library, with patterned columns and a large watercolor mural">
+            <figcaption><em>I Am Made to Leave / I Am Made to Return</em>, installation view, Hillman Library, University of Pittsburgh, 2026. Featuring <em>Pattern Atlas</em>, <em>Speculative Nationality Room</em>, and <em>When I Left</em>. Artworks by Susy Bielak and Fred Schmalz, in collaboration with Aaron Henderson.</figcaption>
+          </figure>
 
+          <!-- 2. Statement: overview -->
+          <p class="statement-label">Project statement by Susy Bielak</p>
           <div class="project-description">
-            <p>Vibe Philology: Translation of the Glory of the Goddess is a humanities-driven project that develops an innovative approach to translation at the intersection of philology, ethnography, and artificial intelligence. Borrowing from the idea of 'vibe coding'—an intuitive, iterative approach to programming that works alongside AI—'vibe philology' names a mode of translation that integrates close reading with affective, contextual, and AI-assisted interpretation.</p>
+            <p>My HUMAN Fellowship has supported the development of two interconnected bodies of work, <em>Speculative Nationality Rooms</em> and <em>Pattern Atlas</em>, within the larger project <em>I Am Made to Leave / I Am Made to Return</em>. Both use humanistic and artistic research to consider nationality, migration, cultural inheritance, home, and belonging, while exploring how AI can function as a research and visualization tool within an artist-led process.</p>
 
-            <p>The project centers on producing a new translation of the Devi Mahatmyam (Glory of the Goddess), a foundational Sanskrit text (c. sixth–eighth centuries CE) that remains widely recited in contemporary ritual contexts across South Asia. While the text has been translated multiple times, existing translations largely privilege textual and theological analysis, often neglecting its lived, performed, and affective dimensions. This project asks: how might translation better capture not only semantic meaning, but also ritual "vibe"—the sonic, embodied, and interpretive textures through which texts are experienced in practice?</p>
-
-            <p>The project engages core humanistic practices including close reading of Sanskrit source material, comparative analysis of existing translations, and interpretive attention to poetics, metaphor, and theological nuance. It also draws on ethnographic insight into recitation practices, treating performance, repetition, and oral transmission as interpretive frameworks that inform translation choices.</p>
-
-            <p>AI will be engaged both as a tool and as an object of critical inquiry. Using platforms such as DharmaMitra, Claude, and ChatGPT, the project will experiment with AI-assisted Sanskrit parsing, lexical analysis, and translation alignment, enabling rapid comparison across grammatical possibilities and semantic ranges. Large language models will be used to generate draft translations, identify patterns across commentarial traditions, and assist in organizing variant readings. At the same time, the project will critically evaluate these outputs, examining how AI systems handle ambiguity, poetic density, and culturally embedded concepts that resist straightforward equivalence.</p>
-
-            <p>A key component of the project is assessing bias and limitation in AI-generated translations. Sanskrit texts such as the Devi Mahatmyam present challenges including polyvalent vocabulary, non-linear syntax, and layered theological meanings. AI tools often flatten these complexities, privileging standardized or normative interpretations that may obscure regional, ritual, or non-orthodox traditions.</p>
+            <p><em>Speculative Nationality Rooms</em> grows out of conversations with people whose relationships to home and nationality are multivalent, inviting them to imagine nationality rooms of their own. Interviews, participant photographs, architectural references, archival and visual research, and AI-assisted rendering become the foundation for large-scale watercolor paintings: imagined spaces of belonging shaped by migration, memory, and lived experience.</p>
           </div>
 
-          <div class="project-images">
-            <h3>Project Documentation</h3>
-            <div class="images-grid">
-              <figure class="project-image">
-                <img src="fellows/golovkova-manuscript.jpg" alt="Manuscript of the Devi Mahatmyam">
-                <figcaption>Manuscript of the Devi Mahatmyam (Glory of the Goddess) at LACMA (Los Angeles County Museum of Art)</figcaption>
-              </figure>
-              <figure class="project-image">
-                <img src="fellows/golovkova-durga.jpg" alt="Durga as Slayer of Mahisasura at Mahabalipuram">
-                <figcaption>Durga as Slayer of the Demon Mahisasura at Mahabalipuram (photo by author)</figcaption>
-              </figure>
-            </div>
+          <!-- 3. The painting -->
+          <figure class="inline-figure">
+            <img src="fellows/bielak-keila-rio.jpg" alt="Watercolor painting of an imagined room with plants, bookshelves, a hammock and a view of mountains">
+            <figcaption>Susy Bielak, <em>Speculative Nationality Room: Keila (Rio)</em>, 2026, from <em>I Am Made to Leave / I Am Made to Return</em>, Hillman Library, University of Pittsburgh. Developed through conversations with Keila Grinberg as part of Bielak&rsquo;s ongoing <em>Speculative Nationality Rooms</em> series.</figcaption>
+          </figure>
+
+          <!-- 4. Pattern Atlas -->
+          <div class="project-description no-dropcap">
+            <p>For <em>Pattern Atlas</em>, I worked with Lake Forest College student researchers Ari Kazantceva and Alexa Moreno to investigate patterns and ornamental traditions across cultures and geographies. AI-assisted research tools allowed us to search and make connections across extensive online museum, ethnographic, cultural and personal collections at a scale that would otherwise have been difficult. The research process continually returned to questions of cultural specificity, interpretation, and how to preserve difference and complexity. The completed work draws from more than 200 pattern sources and uses beauty, ornamentation, and pattern to trace histories of cultural transmission and connection across time and geography.</p>
           </div>
 
+          <!-- 5. Student researcher quote -->
+          <blockquote class="student-quote">
+            <p class="quote-label">Student Researcher</p>
+            <p>&ldquo;What was most meaningful to me about working on Pattern Atlas was the dedication we put into creating an authentic and genuine representation of the cultures and objects we researched. Whether we were looking at patterns from Germany, El Salvador, India, or elsewhere, I was constantly surprised by the connections and similar motifs that emerged across cultures. Seeing those repetitions made me realize how, despite our unique histories and differences, there are ways in which we are deeply connected simply because we are human. It is incredibly meaningful to see that idea come to life in the finished installation.&rdquo;</p>
+            <cite><strong>Alexa Moreno</strong>, Lake Forest College student researcher, <em>Pattern Atlas</em></cite>
+          </blockquote>
+
+          <!-- 6. Hillman installation -->
+          <div class="project-description no-dropcap">
+            <p>These two HUMAN-supported strands are now part of the completed installation <em>I Am Made to Leave / I Am Made to Return</em> at the University of Pittsburgh&rsquo;s Hillman Library, a collaborative project by Fred Schmalz and me, with Aaron Henderson, on view July 2026&ndash;July 2027. Drawing on Pitt&rsquo;s Nationality Rooms and the University Library System Archives and Special Collections, four interconnected artworks unfold across the library and consider how cultural memory is preserved, interpreted, carried forward, and continually remade.</p>
+          </div>
+
+          <figure class="inline-figure">
+            <img src="fellows/bielak-installation-2.jpg" alt="Installation view showing the Keila (Rio) watercolor mural at center and a patterned Pattern Atlas column at right inside Hillman Library">
+            <figcaption><em>I Am Made to Leave / I Am Made to Return</em>, installation view, Hillman Library, University of Pittsburgh, 2026. <em>Speculative Nationality Room: Keila (Rio)</em> at center and <em>Pattern Atlas</em> at right. Artworks by Susy Bielak and Fred Schmalz, in collaboration with Aaron Henderson.</figcaption>
+          </figure>
+
+          <!-- 7. What's next -->
+          <div class="project-description no-dropcap">
+            <p>The <em>Speculative Nationality Rooms</em> research will continue and expand at Lake Forest College this winter in my solo exhibition, <em>Inner Weather</em>, on view January 21&ndash;February 21, 2027. The exhibition will include new paintings from the series alongside video from <em>I Am Made to Leave / I Am Made to Return</em> and other recent work investigating home, belonging, and movement.</p>
+          </div>
+
+          <!-- 8. Details -->
           <div class="project-meta">
             <div class="meta-item">
-              <h4>Course Integration</h4>
-              <p>RELG 214: Avatars, Goddesses, and Demons: Hindu Tales of Liberation and Wonder (Summer 2027)</p>
+              <h4>Installation</h4>
+              <p><em>I Am Made to Leave / I Am Made to Return</em><br>Hillman Library, University of Pittsburgh<br>July 2026 &ndash; July 2027</p>
+              <p><a href="https://iammade.library.pitt.edu/" target="_blank" rel="noopener">Project site with installation photographs &rarr;</a></p>
+            </div>
+            <div class="meta-item">
+              <h4>Upcoming Exhibition</h4>
+              <p><em>Inner Weather</em>, solo exhibition<br>Lake Forest College<br>January 21 &ndash; February 21, 2027</p>
+            </div>
+            <div class="meta-item">
+              <h4>Collaborators</h4>
+              <p>Fred Schmalz and Aaron Henderson (installation)</p>
+              <p>Student researchers: Ari Kazantceva and Alexa Moreno (<em>Pattern Atlas</em>)</p>
+            </div>
+            <div class="meta-item">
+              <h4>Press</h4>
+              <p><a href="https://www.utimes.pitt.edu/news/multi-element" target="_blank" rel="noopener">University Times &rarr;</a></p>
+              <p><a href="https://www.pittwire.pitt.edu/features-articles/2026/09/08/hillman-library-nationality-rooms-bielak-schmalz" target="_blank" rel="noopener">PittWire &rarr;</a></p>
+              <p><a href="https://pittnews.com/article/202964/featured/it-brings-more-liveliness-to-the-building-students-praise-new-art-installation-in-hillman-library/" target="_blank" rel="noopener">The Pitt News &rarr;</a></p>
             </div>
             <div class="meta-item">
               <h4>Focus Areas</h4>
-              <p>Philology, Ethnography, AI Translation, Sanskrit Studies, Religious Studies</p>
+              <p>Nationality, Migration, Cultural Inheritance, Home and Belonging, Pattern and Ornament</p>
             </div>
             <div class="meta-item">
-              <h4>AI Tools</h4>
-              <p>DharmaMitra, Claude, ChatGPT</p>
-            </div>
-            <div class="meta-item">
-              <h4>Expected Impact</h4>
-              <p>Critically examining how AI translation tools reproduce dominant linguistic and cultural assumptions, developing ethically informed approaches to AI use in the humanities.</p>
+              <h4>Artist</h4>
+              <p><a href="https://www.susybielak.com/" target="_blank" rel="noopener">susybielak.com &rarr;</a></p>
             </div>
           </div>
 
           <nav class="fellow-nav">
-            <a href="index.html#fellows" class="prev">
+            <a href="fellows.html#2025" class="prev">
               <span class="nav-label">&larr; Archive</span>
-              <span class="nav-name">All Fellows</span>
+              <span class="nav-name">2025-26 Cohort</span>
             </a>
-            <a href="fellow-corey.html" class="next">
-              <span class="nav-label">Next Fellow &rarr;</span>
-              <span class="nav-name">Josh Corey</span>
+            <a href="fellow-golovkova.html" class="next">
+              <span class="nav-label">Also see &rarr;</span>
+              <span class="nav-name">Anya Golovkova</span>
             </a>
           </nav>
         </div>
       </div>
     </article>
   </main>
-
   <!-- Footer -->
   <footer>
     <div class="footer-inner">
