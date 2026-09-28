@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HUMAN | Enter</title>
+  <meta name="robots" content="noindex">
+  <style>
+    @font-face {
+      font-family: 'Room 205';
+      src: url('font/Room205-Regular.otf') format('opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    :root {
+      --paper: #FAF8F3;
+      --red: #B61F2A;
+      --red-dark: #8B1820;
+      --charcoal: #1C1C1C;
+      --muted: #888;
+      --rule: rgba(28, 28, 28, 0.2);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--paper);
+      color: var(--charcoal);
+      font-family: 'Room 205', Georgia, serif;
+      padding: 24px 16px;
+    }
+    .card {
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    .logo {
+      width: 72px;
+      height: auto;
+      margin: 0 auto 28px;
+      display: block;
+    }
+    h1 {
+      font-size: 34px;
+      font-weight: normal;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+    p {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 32px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    form { display: flex; flex-direction: column; gap: 14px; }
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      border: 1px solid var(--rule);
+      border-radius: 0;
+      background: #fff;
+      color: var(--charcoal);
+      text-align: center;
+      letter-spacing: 0.2em;
+      outline: none;
+    }
+    input:focus { border-color: var(--red); }
+    button {
+      padding: 14px 16px;
+      font-size: 13px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border: none;
+      background: var(--red);
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover { background: var(--red-dark); }
+    .error {
+      min-height: 20px;
+      font-size: 13px;
+      color: var(--red);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+    .card.shake { animation: shake 0.4s; }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <img src="logo.png" alt="HUMAN" class="logo">
+    <h1>HUMAN</h1>
+    <p>This site is private. Enter the password to continue.</p>
+    <form id="form" autocomplete="off">
+      <input type="password" id="pw" placeholder="Password" autofocus required>
+      <button type="submit">Enter</button>
+      <div class="error" id="error"></div>
+    </form>
+  </div>
+
+  <script>
+    var KEY = 'human_site_unlocked';
+    var HASH = '79a5478768d2447431a90f7f4549df735f50ad541371464c248abc7522dc3a01';
+
+    function sha256(text) {
+      return crypto.subtle.digest('SHA-256', new TextEncoder().encode(text)).then(function (buf) {
+        return Array.from(new Uint8Array(buf)).map(function (b) {
+          return b.toString(16).padStart(2, '0');
+        }).join('');
+      });
+    }
+
+    function nextPage() {
+      var next = new URLSearchParams(location.search).get('next') || 'index.html';
+      // only allow local pages, never an outside link
+      if (/^https?:|^\/\//i.test(next) || next.indexOf('enter.html') === 0) next = 'index.html';
+      return next;
+    }
+
+    try {
+      if (localStorage.getItem(KEY) === HASH) location.replace(nextPage());
+    } catch (e) {}
+
+    document.getElementById('form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = document.getElementById('pw');
+      var value = input.value.trim().toLowerCase();
+      sha256(value).then(function (h) {
+        if (h === HASH) {
+          try { localStorage.setItem(KEY, HASH); } catch (err) {}
+          location.replace(nextPage());
+        } else {
+          var card = document.getElementById('card');
+          document.getElementById('error').textContent = 'Wrong password. Try again.';
+          card.classList.remove('shake');
+          void card.offsetWidth;
+          card.classList.add('shake');
+          input.value = '';
+          input.focus();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
