@@ -170,7 +170,32 @@
       color: var(--red);
     }
 
-    .fellows-table td:nth-child(2) {
+    .fellows-table td.fellow-photo {
+      width: 56px;
+      padding-right: 0;
+    }
+
+    .fellow-photo img {
+      display: block;
+      width: 56px;
+      height: 56px;
+      object-fit: cover;
+      border-radius: 50%;
+      background: var(--paper-dark);
+      filter: grayscale(20%);
+      transition: filter 0.3s;
+    }
+
+    .fellows-table tr:hover .fellow-photo img {
+      filter: grayscale(0%);
+    }
+
+    /* Silhouette placeholder for fellows without a photo yet */
+    .fellow-photo img.fellow-placeholder {
+      filter: none;
+    }
+
+    .fellows-table td:nth-child(3) {
       width: 180px;
     }
 
@@ -262,6 +287,8 @@
       main { padding: 6rem 1.5rem 2rem; }
       nav { display: none; }
       .fellows-table td:first-child { display: none; }
+      .fellows-table td { padding: 1rem 0.5rem; }
+      .fellow-photo img { width: 44px; height: 44px; }
       .ra-grid { grid-template-columns: 1fr; }
       .footer-content { grid-template-columns: 1fr; }
     }
@@ -314,6 +341,7 @@
       <table class="fellows-table">
         <tr>
           <td>HUMAN.26.01</td>
+          <td class="fellow-photo"><img src="fellows/golovkova.jpg" alt="Anya Golovkova" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')"></td>
           <td>
             <div class="fellow-name">Anya Golovkova</div>
             <div class="fellow-dept">Religion</div>
@@ -323,6 +351,7 @@
         </tr>
         <tr>
           <td>HUMAN.26.02</td>
+          <td class="fellow-photo"><img src="fellows/corey.png" alt="Josh Corey" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')"></td>
           <td>
             <div class="fellow-name">Josh Corey</div>
             <div class="fellow-dept">English</div>
@@ -332,6 +361,7 @@
         </tr>
         <tr>
           <td>HUMAN.26.03</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="Paul Henne" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">Paul Henne</div>
             <div class="fellow-dept">Philosophy</div>
@@ -341,6 +371,7 @@
         </tr>
         <tr>
           <td>HUMAN.26.04</td>
+          <td class="fellow-photo"><img src="fellows/kee.png" alt="Justin Kee" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')"></td>
           <td>
             <div class="fellow-name">Justin Kee</div>
             <div class="fellow-dept">Politics & Philosophy</div>
@@ -350,6 +381,7 @@
         </tr>
         <tr>
           <td>HUMAN.26.05</td>
+          <td class="fellow-photo"><img src="fellows/meyer.png" alt="Don Meyer" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')"></td>
           <td>
             <div class="fellow-name">Don Meyer</div>
             <div class="fellow-dept">Music</div>
@@ -359,6 +391,7 @@
         </tr>
         <tr>
           <td>HUMAN.26.06</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="Mel Rovner" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">Mel Rovner</div>
             <div class="fellow-dept">Art</div>
@@ -368,6 +401,7 @@
         </tr>
         <tr>
           <td>HUMAN.26.07</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="Dan Schwartz" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">Dan Schwartz</div>
             <div class="fellow-dept">Music</div>
@@ -387,6 +421,7 @@
       <table class="fellows-table">
         <tr>
           <td>HUMAN.25.01</td>
+          <td class="fellow-photo"><img src="fellows/bielak.png" alt="Susy Bielak" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')"></td>
           <td>
             <div class="fellow-name">Susy Bielak</div>
             <div class="fellow-dept">Studio Art</div>
@@ -396,6 +431,7 @@
         </tr>
         <tr>
           <td>HUMAN.25.02</td>
+          <td class="fellow-photo"><img src="fellows/corey.png" alt="Josh Corey" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')"></td>
           <td>
             <div class="fellow-name">Josh Corey</div>
             <div class="fellow-dept">English</div>
@@ -405,6 +441,7 @@
         </tr>
         <tr>
           <td>HUMAN.25.03</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="Kimiko Matsumura" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">Kimiko Matsumura</div>
             <div class="fellow-dept">Art History</div>
@@ -414,6 +451,7 @@
         </tr>
         <tr>
           <td>HUMAN.25.04</td>
+          <td class="fellow-photo"><img src="fellows/meyer.png" alt="Don Meyer" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')"></td>
           <td>
             <div class="fellow-name">Don Meyer</div>
             <div class="fellow-dept">Music</div>
@@ -423,6 +461,7 @@
         </tr>
         <tr>
           <td>HUMAN.25.05</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="Mel Rovner" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">Mel Rovner</div>
             <div class="fellow-dept">Art</div>
@@ -432,6 +471,7 @@
         </tr>
         <tr>
           <td>HUMAN.25.06</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="Tracy Taylor" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">Tracy Taylor</div>
             <div class="fellow-dept">Digital Art</div>
@@ -451,6 +491,7 @@
       <table class="fellows-table">
         <tr>
           <td>HUMAN.24.01</td>
+          <td class="fellow-photo"><img src="fellows/corey.png" alt="Josh Corey" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')"></td>
           <td>
             <div class="fellow-name">Josh Corey</div>
             <div class="fellow-dept">English</div>
@@ -460,6 +501,7 @@
         </tr>
         <tr>
           <td>HUMAN.24.02</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="Mel Rovner" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">Mel Rovner</div>
             <div class="fellow-dept">Art</div>
@@ -469,6 +511,7 @@
         </tr>
         <tr>
           <td>HUMAN.24.03</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="David Sanchez-Burr" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">David Sanchez-Burr</div>
             <div class="fellow-dept">Art</div>
@@ -478,6 +521,7 @@
         </tr>
         <tr>
           <td>HUMAN.24.04</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="Dan Schwartz" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">Dan Schwartz</div>
             <div class="fellow-dept">Music</div>
@@ -487,6 +531,7 @@
         </tr>
         <tr>
           <td>HUMAN.24.05</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="Tracy Taylor" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">Tracy Taylor</div>
             <div class="fellow-dept">Digital Art</div>
@@ -496,6 +541,7 @@
         </tr>
         <tr>
           <td>HUMAN.24.06</td>
+          <td class="fellow-photo"><img src="fellows/placeholder.svg" alt="Rachel Whidden" class="fellow-placeholder"></td>
           <td>
             <div class="fellow-name">Rachel Whidden</div>
             <div class="fellow-dept">Communication</div>

@@ -398,6 +398,15 @@
       transform: scale(1.03);
     }
 
+    /* Silhouette placeholder for fellows without a photo yet */
+    .fellow-image img.fellow-placeholder {
+      filter: none;
+    }
+
+    .fellow-card:hover .fellow-image img.fellow-placeholder {
+      transform: none;
+    }
+
     .fellow-info {
       padding: 1.25rem;
     }
@@ -1113,7 +1122,7 @@
           <!-- 2026-27 Fellows -->
           <a href="fellow-golovkova.html" class="fellow-card">
             <div class="fellow-image">
-              <img src="fellows/golovkova.jpg" alt="Anya Golovkova">
+              <img src="fellows/golovkova.jpg" alt="Anya Golovkova" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')">
             </div>
             <div class="fellow-info">
               <div class="fellow-catalogue">HUMAN.26.01</div>
@@ -1124,7 +1133,7 @@
 
           <a href="fellow-corey.html" class="fellow-card">
             <div class="fellow-image">
-              <img src="fellows/corey.png" alt="Josh Corey">
+              <img src="fellows/corey.png" alt="Josh Corey" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')">
             </div>
             <div class="fellow-info">
               <div class="fellow-catalogue">HUMAN.26.02</div>
@@ -1135,7 +1144,7 @@
 
           <a href="fellow-henne.html" class="fellow-card">
             <div class="fellow-image">
-              <img src="fellows/henne.jpg" alt="Paul Henne">
+              <img src="fellows/placeholder.svg" alt="Paul Henne" class="fellow-placeholder">
             </div>
             <div class="fellow-info">
               <div class="fellow-catalogue">HUMAN.26.03</div>
@@ -1146,7 +1155,7 @@
 
           <a href="fellow-kee.html" class="fellow-card">
             <div class="fellow-image">
-              <img src="fellows/kee.png" alt="Justin Kee">
+              <img src="fellows/kee.png" alt="Justin Kee" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')">
             </div>
             <div class="fellow-info">
               <div class="fellow-catalogue">HUMAN.26.04</div>
@@ -1157,7 +1166,7 @@
 
           <a href="fellow-meyer.html" class="fellow-card">
             <div class="fellow-image">
-              <img src="fellows/meyer.png" alt="Don Meyer">
+              <img src="fellows/meyer.png" alt="Don Meyer" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')">
             </div>
             <div class="fellow-info">
               <div class="fellow-catalogue">HUMAN.26.05</div>
@@ -1168,7 +1177,7 @@
 
           <a href="fellow-rovner.html" class="fellow-card">
             <div class="fellow-image">
-              <img src="fellows/rovner.jpg" alt="Mel Rovner">
+              <img src="fellows/placeholder.svg" alt="Mel Rovner" class="fellow-placeholder">
             </div>
             <div class="fellow-info">
               <div class="fellow-catalogue">HUMAN.26.06</div>
@@ -1180,7 +1189,7 @@
           <!-- 2025-26 Fellows -->
           <a href="fellow-bielak.html" class="fellow-card">
             <div class="fellow-image">
-              <img src="fellows/bielak.png" alt="Susy Bielak">
+              <img src="fellows/bielak.png" alt="Susy Bielak" onerror="this.onerror=null;this.src='fellows/placeholder.svg';this.classList.add('fellow-placeholder')">
             </div>
             <div class="fellow-info">
               <div class="fellow-catalogue">HUMAN.25.01</div>
